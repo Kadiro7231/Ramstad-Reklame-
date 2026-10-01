@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html lang="no">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Ramstad Reklame – nettsider, design, annonsering og visuelt innhold for bedrifter i Norge." name="description"/>
+<title>Ramstad Reklame</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root{
+      --blue:#0b5ed7;
+      --blue2:#0a3f9c;
+      --ink:#0f172a;
+      --muted:#5f6b7a;
+      --soft:#f5f8fc;
+      --line:#dce5ef;
+      --white:#ffffff;
+      --accent:#eaf2ff;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(220,229,239,.8)}
+    nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px}
+    .mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center;color:white;font-weight:800}
+    .links{display:flex;align-items:center;gap:22px;font-size:14px;font-weight:600;color:#334155}
+    .lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:4px;background:white}
+    .lang button{border:0;background:transparent;padding:7px 10px;border-radius:999px;font-weight:700;cursor:pointer;color:#64748b}
+    .lang button.active{background:var(--blue);color:white}
+    .hero{padding:96px 0 74px;background:
+      radial-gradient(circle at 80% 20%, rgba(11,94,215,.14), transparent 32%),
+      linear-gradient(180deg,#fff 0%,#f8fbff 100%)}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:52px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--blue2);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:700}
+    h1{font-size:clamp(42px,7vw,74px);line-height:1.02;margin:20px 0 22px;letter-spacing:-2.2px}
+    .hero p{font-size:19px;color:var(--muted);max-width:700px;margin:0}
+    .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;border-radius:12px;font-weight:700;border:1px solid var(--line)}
+    .btn.primary{background:var(--blue);color:white;border-color:var(--blue)}
+    .btn.secondary{background:white;color:var(--ink)}
+    .visual{border-radius:28px;padding:26px;background:linear-gradient(145deg,var(--blue2),var(--blue));color:white;box-shadow:0 24px 70px rgba(11,94,215,.22);min-height:420px;display:flex;flex-direction:column;justify-content:space-between}
+    .visual .mini{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .tile{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:18px;padding:18px;min-height:110px}
+    .tile b{display:block;font-size:16px;margin-bottom:6px}
+    .tile span{font-size:13px;opacity:.85}
+    section{padding:78px 0}
+    .section-head{max-width:720px;margin-bottom:34px}
+    .section-head h2{font-size:38px;line-height:1.15;margin:0 0 14px;letter-spacing:-1px}
+    .section-head p{color:var(--muted);margin:0}
+    .services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .card{border:1px solid var(--line);border-radius:20px;padding:24px;background:#fff;transition:.2s ease}
+    .card:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(15,23,42,.08)}
+    .icon{width:44px;height:44px;border-radius:12px;background:var(--accent);color:var(--blue);display:grid;place-items:center;font-weight:800;margin-bottom:16px}
+    .card h3{margin:0 0 8px;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .process{background:var(--soft)}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .step{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px}
+    .num{font-size:12px;font-weight:800;color:var(--blue);margin-bottom:10px}
+    .contact-box{background:linear-gradient(135deg,#0b5ed7,#0a3f9c);color:white;border-radius:28px;padding:42px;display:grid;grid-template-columns:1fr .9fr;gap:30px;align-items:center}
+    .contact-box h2{font-size:38px;line-height:1.1;margin:0 0 14px}
+    .contact-box p{opacity:.86;margin:0}
+    .contact-list{display:grid;gap:12px}
+    .contact-item{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:14px 16px}
+    .contact-item small{display:block;opacity:.75}
+    footer{padding:26px 0;border-top:1px solid var(--line);font-size:13px;color:#64748b}
+    .mobile-menu{display:none}
+    @media (max-width: 900px){
+      .hero-grid,.contact-box{grid-template-columns:1fr}
+      .services{grid-template-columns:1fr 1fr}
+      .steps{grid-template-columns:1fr}
+      .links a{display:none}
+    }
+    @media (max-width: 560px){
+      .wrap{width:min(100% - 24px,1120px)}
+      nav{height:66px}
+      .brand span:last-child{font-size:14px}
+      .hero{padding:68px 0 52px}
+      h1{font-size:45px}
+      .hero p{font-size:17px}
+      .visual{min-height:360px}
+      .visual .mini{grid-template-columns:1fr}
+      .services{grid-template-columns:1fr}
+      section{padding:58px 0}
+      .contact-box{padding:28px}
+      .contact-box h2,.section-head h2{font-size:31px}
+    }
+  
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .why-card{border:1px solid var(--line);border-radius:20px;padding:24px;background:#fff}
+    .why-card h3{margin:0 0 8px;font-size:18px}
+    .why-card p{margin:0;color:var(--muted);font-size:14px}
+    .contact-form{display:grid;gap:12px}
+    .contact-form input,.contact-form textarea{
+      width:100%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.12);
+      color:white;border-radius:12px;padding:13px 14px;font:inherit;outline:none
+    }
+    .contact-form input::placeholder,.contact-form textarea::placeholder{color:rgba(255,255,255,.72)}
+    .contact-form textarea{min-height:120px;resize:vertical}
+    .contact-form button{cursor:pointer;border:0}
+    .floating-actions{position:fixed;right:18px;bottom:18px;z-index:30;display:flex;flex-direction:column;gap:10px}
+    .float-btn{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;
+      box-shadow:0 10px 28px rgba(11,94,215,.28);font-weight:800}
+    .float-btn.fb{background:#1877f2}
+    .note{font-size:12px;opacity:.75;margin-top:8px}
+    @media (max-width:900px){.why-grid{grid-template-columns:1fr}}
+
+  
+    .service-image{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:16px;margin-bottom:18px;border:1px solid var(--line);background:var(--soft)}
+    .card.media-card{padding:14px}
+    .card.media-card .card-body{padding:4px 10px 12px}
+
+  
+    .service-link{display:block;color:inherit;text-decoration:none;height:100%}
+    .service-link .card{height:100%;cursor:pointer}
+    .service-link:focus-visible{outline:3px solid var(--blue);outline-offset:4px;border-radius:20px}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<nav>
+<a aria-label="Ramstad Reklame" class="brand" href="#top">
+<span class="mark">R</span>
+<span>RAMSTAD REKLAME</span>
+</a>
+<div class="links">
+<a data-en="Services" data-no="Tjenester" href="#services">Tjenester</a>
+<a data-en="Why us" data-no="Hvorfor oss" href="#why">Hvorfor oss</a>
+<a data-en="How we work" data-no="Slik jobber vi" href="#process">Slik jobber vi</a>
+<a data-en="Contact" data-no="Kontakt" href="#contact">Kontakt</a>
+<div aria-label="Language switch" class="lang">
+<button class="active" id="noBtn">NO</button>
+<button id="enBtn">EN</button>
+</div>
+</div>
+</nav>
+</div>
+</header>
+<main id="top">
+<section class="hero">
+<div class="wrap hero-grid">
+<div>
+<div class="eyebrow" data-en="Creative solutions for businesses" data-no="Kreative løsninger for bedrifter">Kreative løsninger for bedrifter</div>
+<h1 data-en="We make your business more visible." data-no="Vi gjør bedriften din mer synlig.">Vi gjør bedriften din mer synlig.</h1>
+<p data-en="Websites, design, advertising and visual content – all in one place. We help businesses present themselves clearly, professionally and with a modern look." data-no="Nettsider, design, annonsering og visuelt innhold – samlet på ett sted. Vi hjelper bedrifter med å presentere seg tydelig, moderne og profesjonelt.">
+           Nettsider, design, annonsering og visuelt innhold – samlet på ett sted. Vi hjelper bedrifter med å presentere seg tydelig, moderne og profesjonelt.
+        </p>
+<div class="cta">
+<a class="btn primary" data-en="Contact us" data-no="Kontakt oss" href="#contact">Kontakt oss</a>
+<a class="btn secondary" data-en="View services" data-no="Se tjenester" href="#services">Se tjenester</a>
+</div>
+</div>
+<div aria-label="Ramstad Reklame services" class="visual">
+<div>
+<div style="font-size:13px;opacity:.75;font-weight:700;letter-spacing:.08em">RAMSTAD REKLAME</div>
+<div data-en="Design that gets noticed." data-no="Design som blir lagt merke til." style="font-size:34px;font-weight:800;line-height:1.15;margin-top:10px">Design som blir lagt merke til.</div>
+</div>
+<div class="mini">
+<div class="tile"><b data-en="Websites" data-no="Nettsider">Nettsider</b><span data-en="Fast, clear and mobile-friendly." data-no="Raske, tydelige og mobilvennlige.">Raske, tydelige og mobilvennlige.</span></div>
+<div class="tile"><b data-en="Design" data-no="Design">Design</b><span data-en="Visual identity, flyers and materials." data-no="Visuell profil, flyers og materiell.">Visuell profil, flyers og materiell.</span></div>
+<div class="tile"><b data-en="Advertising" data-no="Annonsering">Annonsering</b><span data-en="Content for digital campaigns." data-no="Innhold for digitale kampanjer.">Innhold for digitale kampanjer.</span></div>
+<div class="tile"><b data-en="Images &amp; content" data-no="Bilder &amp; innhold">Bilder &amp; innhold</b><span data-en="Visual material that supports your message." data-no="Visuelt materiale som støtter budskapet.">Visuelt materiale som støtter budskapet.</span></div>
+</div>
+</div>
+</div>
+</section>
+<section id="services">
+<div class="wrap">
+<div class="section-head">
+<h2 data-en="Services for businesses that want to stand out." data-no="Tjenester for bedrifter som vil synes.">Tjenester for bedrifter som vil synes.</h2>
+<p data-en="We combine design and digital solutions so your business gets a consistent and professional presence." data-no="Vi kombinerer design og digitale løsninger slik at bedriften din får et helhetlig og profesjonelt uttrykk.">
+           Vi kombinerer design og digitale løsninger slik at bedriften din får et helhetlig og profesjonelt uttrykk.
+        </p>
+</div>
+<div class="services">
+<a aria-label="Åpne Nettsider" class="service-link" href="nettsider.html"><article class="card media-card">
+<img alt="Illustrasjon av moderne nettsidedesign" class="service-image" src="websites.jpg"/>
+<div class="card-body">
+<div class="icon">01</div>
+<h3 data-en="Websites" data-no="Nettsider">Nettsider</h3>
+<p data-en="Simple, professional websites that work well on mobile, tablet and desktop." data-no="Enkle og profesjonelle nettsider som fungerer godt på mobil, nettbrett og PC.">
+               Enkle og profesjonelle nettsider som fungerer godt på mobil, nettbrett og PC.
+            </p>
+</div>
+</article></a>
+<a aria-label="Åpne Grafisk design" class="service-link" href="grafisk-design.html"><article class="card media-card">
+<img alt="Illustrasjon av grafisk design og visuell identitet" class="service-image" src="design.jpg"/>
+<div class="card-body">
+<div class="icon">02</div>
+<h3 data-en="Graphic design" data-no="Grafisk design">Grafisk design</h3>
+<p data-en="Flyers, campaign material, visual identity and content adapted to your brand." data-no="Flyers, kampanjemateriell, visuell profil og innhold tilpasset merkevaren din.">
+               Flyers, kampanjemateriell, visuell profil og innhold tilpasset merkevaren din.
+            </p>
+</div>
+</article></a>
+<a aria-label="Åpne Annonsering" class="service-link" href="annonsering.html"><article class="card media-card">
+<img alt="Illustrasjon av digital annonsering" class="service-image" src="advertising.jpg"/>
+<div class="card-body">
+<div class="icon">03</div>
+<h3 data-en="Advertising" data-no="Annonsering">Annonsering</h3>
+<p data-en="Creative advertising material and content designed to make your message clear." data-no="Kreativt annonsemateriell og innhold utviklet for å gjøre budskapet ditt tydelig.">
+               Kreativt annonsemateriell og innhold utviklet for å gjøre budskapet ditt tydelig.
+            </p>
+</div>
+</article></a>
+<a aria-label="Åpne Bilder &amp; innhold" class="service-link" href="bilder-innhold.html"><article class="card media-card">
+<img alt="Illustrasjon av bilder, video og innhold" class="service-image" src="content.jpg"/>
+<div class="card-body">
+<div class="icon">04</div>
+<h3 data-en="Images &amp; content" data-no="Bilder &amp; innhold">Bilder &amp; innhold</h3>
+<p data-en="Visual concepts, images and content for social media and marketing." data-no="Visuelle konsepter, bilder og innhold som kan brukes på sosiale medier og i markedsføring.">
+               Visuelle konsepter, bilder og innhold som kan brukes på sosiale medier og i markedsføring.
+            </p>
+</div>
+</article></a>
+</div>
+</div>
+</section>
+<section id="why">
+<div class="wrap">
+<div class="section-head">
+<h2 data-en="Why Ramstad Reklame?" data-no="Hvorfor Ramstad Reklame?">Hvorfor Ramstad Reklame?</h2>
+<p data-en="We keep communication simple, the work organized and the solutions tailored to what your business actually needs." data-no="Vi holder kommunikasjonen enkel, arbeidet ryddig og løsningene tilpasset det bedriften faktisk trenger.">
+           Vi holder kommunikasjonen enkel, arbeidet ryddig og løsningene tilpasset det bedriften faktisk trenger.
+        </p>
+</div>
+<div class="why-grid">
+<div class="why-card">
+<div class="icon">✓</div>
+<h3 data-en="Clear communication" data-no="Tydelig kommunikasjon">Tydelig kommunikasjon</h3>
+<p data-en="You know what will be done, what you will receive and what the next step is." data-no="Du vet hva som skal gjøres, hva du får og hva neste steg er.">
+             Du vet hva som skal gjøres, hva du får og hva neste steg er.
+          </p>
+</div>
+<div class="why-card">
+<div class="icon">↗</div>
+<h3 data-en="Flexible solutions" data-no="Fleksible løsninger">Fleksible løsninger</h3>
+<p data-en="We adapt content, design and websites to the needs and size of your business." data-no="Vi tilpasser innhold, design og nettsider etter behovet og størrelsen på bedriften.">
+             Vi tilpasser innhold, design og nettsider etter behovet og størrelsen på bedriften.
+          </p>
+</div>
+<div class="why-card">
+<div class="icon">◎</div>
+<h3 data-en="We work where our clients are" data-no="Vi jobber der kundene er">Vi jobber der kundene er</h3>
+<p data-en="We can work digitally with businesses wherever they are located." data-no="Vi kan samarbeide digitalt med bedrifter uansett hvor de befinner seg.">
+             Vi kan samarbeide digitalt med bedrifter uansett hvor de befinner seg.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section class="process" id="process">
+<div class="wrap">
+<div class="section-head">
+<h2 data-en="A simple process from idea to finished solution." data-no="En enkel prosess fra idé til ferdig løsning.">En enkel prosess fra idé til ferdig løsning.</h2>
+</div>
+<div class="steps">
+<div class="step">
+<div class="num">01</div>
+<h3 data-en="We listen" data-no="Vi lytter">Vi lytter</h3>
+<p data-en="You tell us what your business needs, who you want to reach and what style you want." data-no="Du forteller hva bedriften trenger, hvem du vil nå og hvilket uttrykk du ønsker.">
+             Du forteller hva bedriften trenger, hvem du vil nå og hvilket uttrykk du ønsker.
+          </p>
+</div>
+<div class="step">
+<div class="num">02</div>
+<h3 data-en="We create" data-no="Vi utvikler">Vi utvikler</h3>
+<p data-en="We build a solution with clear design, structure and content." data-no="Vi bygger en løsning med tydelig design, struktur og innhold.">
+             Vi bygger en løsning med tydelig design, struktur og innhold.
+          </p>
+</div>
+<div class="step">
+<div class="num">03</div>
+<h3 data-en="We deliver" data-no="Vi leverer">Vi leverer</h3>
+<p data-en="You receive a finished result ready for your marketing and digital channels." data-no="Du får et ferdig resultat som kan brukes i bedriftens markedsføring og digitale kanaler.">
+             Du får et ferdig resultat som kan brukes i bedriftens markedsføring og digitale kanaler.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section id="contact">
+<div class="wrap">
+<div class="contact-box">
+<div>
+<h2 data-en="Have an idea? Let’s talk." data-no="Har du en idé? La oss snakke.">Har du en idé? La oss snakke.</h2>
+<p data-en="Tell us what you need and we’ll find a solution that fits your business." data-no="Fortell oss hva du trenger, så finner vi en løsning som passer bedriften din.">
+             Fortell oss hva du trenger, så finner vi en løsning som passer bedriften din.
+          </p>
+<div class="contact-list" style="margin-top:22px">
+<a class="contact-item" href="tel:+4790557317">
+<small data-en="Phone" data-no="Telefon">Telefon</small>
+<strong>+47 905 57 317</strong>
+</a>
+<a class="contact-item" href="mailto:abdramadan150@gmail.com">
+<small data-en="Email" data-no="E-post">E-post</small>
+<strong>abdramadan150@gmail.com</strong>
+</a>
+<a class="contact-item" href="https://www.facebook.com/profile.php?id=61594957530246" rel="noopener noreferrer" target="_blank">
+<small>Facebook</small>
+<strong>Ramstad Reklame</strong>
+</a>
+</div>
+</div>
+<form class="contact-form" id="contactForm">
+<input data-ph-en="Name" data-ph-no="Navn" id="name" placeholder="Navn" required="" type="text"/>
+<input data-ph-en="Company" data-ph-no="Bedrift" id="company" placeholder="Bedrift" type="text"/>
+<input data-ph-en="Email" data-ph-no="E-post" id="email" placeholder="E-post" required="" type="email"/>
+<textarea data-ph-en="How can we help?" data-ph-no="Hva kan vi hjelpe deg med?" id="message" placeholder="Hva kan vi hjelpe deg med?" required=""></textarea>
+<button class="btn secondary" data-en="Send inquiry" data-no="Send forespørsel" type="submit">Send forespørsel</button>
+<div class="note" data-en="The form opens your email app with the message already prepared." data-no="Skjemaet åpner e-postappen din med meldingen ferdig utfylt.">
+               Skjemaet åpner e-postappen din med meldingen ferdig utfylt.
+          </div>
+</form>
+</div>
+</div>
+</section>
+</main>
+<div aria-label="Quick contact" class="floating-actions">
+<a class="float-btn" href="tel:+4790557317" title="Ring / Call">☎</a>
+<a class="float-btn fb" href="https://www.facebook.com/profile.php?id=61594957530246" rel="noopener noreferrer" target="_blank" title="Facebook">f</a>
+</div>
+<footer>
+<div class="wrap" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
+<span>© 2026 Ramstad Reklame</span>
+<span data-en="Websites • Design • Advertising • Visual content" data-no="Nettsider • Design • Annonsering • Visuelt innhold">Nettsider • Design • Annonsering • Visuelt innhold</span>
+</div>
+</footer>
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const enBtn = document.getElementById('enBtn');
+
+  function setLang(lang){
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-no][data-en]').forEach(el=>{
+      el.textContent = el.dataset[lang];
+    });
+    noBtn.classList.toggle('active', lang === 'no');
+    enBtn.classList.toggle('active', lang === 'en');
+    localStorage.setItem('ramstad_lang', lang);
+  }
+
+  noBtn.addEventListener('click', ()=>setLang('no'));
+  enBtn.addEventListener('click', ()=>setLang('en'));
+
+  const saved = localStorage.getItem('ramstad_lang');
+  if(saved === 'en') setLang('en');
+
+  function syncPlaceholders(lang){
+    document.querySelectorAll('[data-ph-no][data-ph-en]').forEach(el=>{
+      el.placeholder = el.dataset['ph' + lang.charAt(0).toUpperCase() + lang.slice(1)] || el.dataset[lang === 'no' ? 'phNo' : 'phEn'];
+    });
+  }
+
+  const originalSetLang = setLang;
+  setLang = function(lang){
+    originalSetLang(lang);
+    document.querySelectorAll('[data-ph-no][data-ph-en]').forEach(el=>{
+      el.placeholder = lang === 'no' ? el.dataset.phNo : el.dataset.phEn;
+    });
+  };
+
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const lang = document.documentElement.lang || 'no';
+    const name = document.getElementById('name').value.trim();
+    const company = document.getElementById('company').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    const subject = lang === 'en'
+      ? `Website inquiry from ${name}${company ? ' - ' + company : ''}`
+      : `Forespørsel fra ${name}${company ? ' - ' + company : ''}`;
+
+    const body = lang === 'en'
+      ? `Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nMessage:\n${message}`
+      : `Navn: ${name}\nBedrift: ${company}\nE-post: ${email}\n\nMelding:\n${message}`;
+
+    window.location.href = `mailto:abdramadan150@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+
+</script>
+</body>
+</html>
