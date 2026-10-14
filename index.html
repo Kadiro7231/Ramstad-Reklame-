@@ -329,7 +329,7 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
       </div>
       <div class="contact-side contact-list">
         <a class="contact-item" href="tel:+4790557317"><small data-no="Telefon" data-en="Phone">Telefon</small><strong>+47 905 57 317</strong></a>
-        <a class="contact-item" href="mailto:abdramadan150@gmail.com"><small data-no="E-post" data-en="Email">E-post</small><strong>abdramadan150@gmail.com</strong></a>
+        <a class="contact-item" href="mailto:post@ramstadreklame.no"><small data-no="E-post" data-en="Email">E-post</small><strong>post@ramstadreklame.no</strong></a>
         <a class="contact-item" href="https://www.facebook.com/profile.php?id=61594957530246" target="_blank" rel="noopener noreferrer"><small>Facebook</small><strong>Ramstad Reklame</strong></a>
       </div>
     </div>
@@ -368,7 +368,7 @@ document.getElementById('contactForm').addEventListener('submit',e=>{
   const message=document.getElementById('message').value.trim();
   const subject=lang==='en'?`Website inquiry from ${name}${company?' - '+company:''}`:`Forespørsel fra ${name}${company?' - '+company:''}`;
   const body=lang==='en'?`Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nMessage:\n${message}`:`Navn: ${name}\nBedrift: ${company}\nE-post: ${email}\n\nMelding:\n${message}`;
-  location.href=`mailto:abdramadan150@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  location.href=`mailto:post@ramstadreklame.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
 // Keep the public URL clean: no /index.html and no #section in the address bar.
