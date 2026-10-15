@@ -1,4 +1,4 @@
-/* Ramstad Reklame: quote builder, no payment or server-side transmission */
+/* Ramstad Reklame: quote builder with direct enquiry relay; payment remains after agreement */
 (function(){
 'use strict';
 const catalog={
@@ -81,14 +81,14 @@ function create(){
  '<label class="rr-field rr-wide"><span>'+L('E-postadresse','Email address')+'</span><input id="rr-email" name="email" type="email" required maxlength="200" autocomplete="email" value="'+escaped(saved.email)+'" placeholder="navn@bedrift.no"></label>'+
  '<label class="rr-field rr-wide"><span>'+L('Fortell om prosjektet (valgfritt)','Tell us about the project (optional)')+'</span><textarea id="rr-message" name="message" maxlength="5000" placeholder="'+L('Hva ønsker du å få laget?','What would you like us to create?')+'">'+escaped(saved.message)+'</textarea></label></div>'+
  '<div class="rr-extras"><h3>'+L('Valgfrie tillegg','Optional extras')+'</h3><p>'+L('Velg bare det du har behov for. Tillegg kan fjernes før innsending.','Select only what you need. Extras can be removed before you submit.')+'</p>'+extraHtml+'</div>'+
- '<p class="rr-privacy-note">'+L('Vi bruker opplysningene for å følge opp din forespørsel. Les vår ','We use your details to follow up on your enquiry. Read our ')+'<a href="personvern.html">'+L('personvernerklæring','privacy policy')+'</a>.</p></form>'+
+ '<p class="rr-privacy-note">'+L('Vi bruker opplysningene for å følge opp din forespørsel. Les vår ','We use your details to follow up on your enquiry. Read our ')+'<a href="personvern.html">'+L('personvernerklæring','privacy policy')+'</a>.</p><div id="rr-form-status" class="rr-status" role="status" aria-live="polite"></div></form>'+
  '<aside class="rr-summary" aria-live="polite"><h3>'+L('Oppsummering','Summary')+'</h3><div id="rr-summary-lines"></div><div class="rr-summary-total"><span>'+L('Veiledende sum','Indicative total')+'</span><strong id="rr-total">–</strong></div>'+
  '<small id="rr-summary-terms"></small><div class="rr-chip">'+L('Ingen betaling før skriftlig avtale','No payment before written agreement')+'</div>'+
  '<button class="rr-action" type="submit" form="rr-form">'+L('Gjennomgå forespørsel','Review enquiry')+' ↗</button>'+
- '<div class="rr-hint">'+L('Når du godkjenner forespørselen, åpnes e-postprogrammet ditt. Du må selv trykke send. Vi bekrefter endelig pris skriftlig og sender først deretter Stripe-betalingslenke.','When you confirm your enquiry, your email app opens. You must press send yourself. We confirm the final price in writing before sending a Stripe payment link.')+'</div><a class="rr-payment-info" href="betaling.html">'+L('Les om sikker betaling etter avtale ↗','Learn about secure payment after agreement ↗')+'</a></aside></div></div>'+
- '<dialog class="rr-dialog" id="rr-dialog" aria-labelledby="rr-review-title"><div class="rr-dialog-inner"><h3 id="rr-review-title">'+L('Kontroller forespørselen','Review your enquiry')+'</h3><p>'+L('Er opplysningene og beløpet riktige? Du kan gå tilbake og endre før du åpner e-posten.','Are the details and amount correct? You can go back and edit before opening your email app.')+'</p><div class="rr-review" id="rr-review-text"></div>'+
- '<p>'+L('Det sendes ikke noe automatisk; du må trykke send i e-postprogrammet. Dette er ikke betaling eller bindende kjøp.','Nothing is sent automatically; you need to press send in your email app. This is not payment or a binding purchase.')+'</p>'+
- '<div class="rr-dialog-actions"><button type="button" class="rr-secondary" id="rr-edit">'+L('Gå tilbake','Go back')+'</button><button type="button" class="rr-action" id="rr-send">'+L('Send din forespørsel','Send your request')+'</button></div></div></dialog>';
+ '<div class="rr-hint">'+L('Forespørselen sendes direkte fra nettstedet. Vi kontakter deg dersom vi trenger flere detaljer, og avtaler pris før eventuell betaling.','Your enquiry is submitted from this website. We will contact you if we need more details and agree the price before any payment.')+'</div><a class="rr-payment-info" href="betaling.html">'+L('Les om sikker betaling etter avtale ↗','Learn about secure payment after agreement ↗')+'</a></aside></div></div>'+
+ '<dialog class="rr-dialog" id="rr-dialog" aria-labelledby="rr-review-title"><div class="rr-dialog-inner"><h3 id="rr-review-title">'+L('Kontroller forespørselen','Review your enquiry')+'</h3><p>'+L('Er opplysningene riktige? Du kan gå tilbake og endre før du sender forespørselen.','Are the details correct? You can go back and make changes before submitting your enquiry.')+'</p><div class="rr-review" id="rr-review-text"></div>'+
+ '<p>'+L('Ved innsending sendes opplysningene via FormSubmit.co til oss. Dette er ikke betaling eller bindende kjøp.','When submitted, the information is forwarded to us via FormSubmit.co. This is not a payment or binding purchase.')+'</p>'+
+ '<div class="rr-status" id="rr-dialog-status" role="status" aria-live="polite"></div><div class="rr-dialog-actions"><button type="button" class="rr-secondary" id="rr-edit">'+L('Gå tilbake','Go back')+'</button><button type="button" class="rr-action" id="rr-send">'+L('Send din forespørsel','Send your request')+'</button></div></div></dialog>';
 const form=root.querySelector('#rr-form');
 form.addEventListener('input',()=>{capture();summary()});
 form.addEventListener('change',e=>{
@@ -99,11 +99,47 @@ form.addEventListener('submit',e=>{e.preventDefault();capture();if(!form.reportV
  const d=root.querySelector('#rr-dialog');root.querySelector('#rr-review-text').textContent=makeBody();d.showModal();
 });
 root.querySelector('#rr-edit').addEventListener('click',()=>root.querySelector('#rr-dialog').close());
-root.querySelector('#rr-send').addEventListener('click',()=>{
-  const body=makeBody();
-  const subj='Ramstad Reklame – '+L('Forespørsel','Enquiry')+' – '+findProduct()[lang()];
-  root.querySelector('#rr-dialog').close();
-  window.location.href='mailto:post@ramstadreklame.no?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+root.querySelector('#rr-send').addEventListener('click',async()=>{
+  const button=root.querySelector('#rr-send');
+  const edit=root.querySelector('#rr-edit');
+  const status=root.querySelector('#rr-dialog-status');
+  if(button.disabled)return;
+  button.disabled=true;edit.disabled=true;
+  status.className='rr-status';
+  status.textContent=L('Sender forespørselen…','Sending your enquiry…');
+  try{
+    const response=await fetch('https://formsubmit.co/ajax/post@ramstadreklame.no',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        _subject:'Ramstad Reklame – '+L('Forespørsel','Enquiry')+' – '+findProduct()[lang()],
+        _replyto:saved.email,
+        _template:'table',
+        _url:window.location.href,
+        _honey:'',
+        name:saved.name.trim(),
+        company:saved.company.trim()||'–',
+        email:saved.email.trim(),
+        category:catalog[chosenCategory][lang()],
+        service:findProduct()[lang()],
+        details:makeBody()
+      })
+    });
+    const data=await response.json();
+    if(!response.ok||String(data.success).toLowerCase()!=='true')throw new Error('relay failed');
+    root.querySelector('#rr-dialog').close();
+    const finalStatus=root.querySelector('#rr-form-status');
+    finalStatus.className='rr-status rr-success';
+    finalStatus.textContent=L('Takk! Forespørselen er registrert. Vi kontakter deg hvis vi trenger flere detaljer.','Thank you! Your enquiry has been registered. We will contact you if we need more information.');
+    saved={product:'',extras:[],name:'',company:'',email:'',message:''};
+    create();
+    const cleanStatus=root.querySelector('#rr-form-status');
+    cleanStatus.className='rr-status rr-success';
+    cleanStatus.textContent=L('Takk! Forespørselen er registrert. Vi kontakter deg hvis vi trenger flere detaljer.','Thank you! Your enquiry has been registered. We will contact you if we need more information.');
+  }catch(err){
+    status.className='rr-status rr-error';
+    status.textContent=L('Forespørselen ble ikke sendt. Prøv igjen eller skriv til post@ramstadreklame.no.','Your enquiry was not submitted. Please try again or email post@ramstadreklame.no.');
+  }finally{button.disabled=false;edit.disabled=false}
 });
 summary();
 }
