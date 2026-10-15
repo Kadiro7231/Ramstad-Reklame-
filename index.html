@@ -322,11 +322,13 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
         <h2 data-no="Klar for å gjøre bedriften mer synlig?" data-en="Ready to make your business more visible?">Klar for å gjøre bedriften mer synlig?</h2>
         <p data-no="Send oss en melding, så finner vi en løsning som passer behovet ditt." data-en="Send us a message and we’ll find a solution that fits your needs.">Send oss en melding, så finner vi en løsning som passer behovet ditt.</p>
         <form class="contact-form" id="contactForm">
-          <input id="name" required type="text" data-ph-no="Navn" data-ph-en="Name" placeholder="Navn">
-          <input id="company" type="text" data-ph-no="Bedrift" data-ph-en="Company" placeholder="Bedrift">
-          <input id="email" required type="email" data-ph-no="E-post" data-ph-en="Email" placeholder="E-post">
-          <textarea id="message" required data-ph-no="Hva kan vi hjelpe deg med?" data-ph-en="How can we help?" placeholder="Hva kan vi hjelpe deg med?"></textarea>
+          <input id="name" name="name" maxlength="120" autocomplete="name" required type="text" data-ph-no="Navn" data-ph-en="Name" placeholder="Navn">
+          <input id="company" name="company" maxlength="120" autocomplete="organization" type="text" data-ph-no="Bedrift" data-ph-en="Company" placeholder="Bedrift">
+          <input id="email" name="email" maxlength="200" autocomplete="email" required type="email" data-ph-no="E-post" data-ph-en="Email" placeholder="E-post">
+          <textarea id="message" name="message" maxlength="5000" required data-ph-no="Hva kan vi hjelpe deg med?" data-ph-en="How can we help?" placeholder="Hva kan vi hjelpe deg med?"></textarea>
           <button class="btn secondary" type="submit"><span data-no="Send forespørsel" data-en="Send inquiry">Send forespørsel</span><span class="arrow">→</span></button>
+          <p id="contactStatus" role="status" aria-live="polite" style="line-height:1.5;margin:4px 0 0"></p>
+          <p style="font-size:12px;margin:0"><a href="personvern.html" style="color:inherit;text-decoration:underline" data-no="Les om behandling av opplysningene dine" data-en="How we handle your information">Les om behandling av opplysningene dine</a></p>
         </form>
       </div>
       <div class="contact-side contact-list">
@@ -362,16 +364,44 @@ const observer=new IntersectionObserver(entries=>{
 },{threshold:.12,rootMargin:'0px 0px -35px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-document.getElementById('contactForm').addEventListener('submit',e=>{
+document.getElementById('contactForm').addEventListener('submit',async e=>{
   e.preventDefault();
+  const form=e.currentTarget;
+  if(!form.reportValidity())return;
   const lang=document.documentElement.lang||'no';
   const name=document.getElementById('name').value.trim();
   const company=document.getElementById('company').value.trim();
   const email=document.getElementById('email').value.trim();
   const message=document.getElementById('message').value.trim();
+  if(!name||!email||!message)return;
   const subject=lang==='en'?`Website inquiry from ${name}${company?' - '+company:''}`:`Forespørsel fra ${name}${company?' - '+company:''}`;
-  const body=lang==='en'?`Name: ${name}\nCompany: ${company}\nEmail: ${email}\n\nMessage:\n${message}`:`Navn: ${name}\nBedrift: ${company}\nE-post: ${email}\n\nMelding:\n${message}`;
-  location.href=`mailto:post@ramstadreklame.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const status=document.getElementById('contactStatus');
+  const button=form.querySelector('button[type="submit"]');
+  button.disabled=true;status.style.color='#c5efff';
+  status.textContent=lang==='en'?'Sending your message…':'Sender meldingen…';
+  try{
+    const response=await fetch('https://formsubmit.co/ajax/post@ramstadreklame.no',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        _subject:subject,
+        _replyto:email,
+        _template:'table',
+        _url:window.location.href,
+        name:name,
+        company:company||'–',
+        email:email,
+        message:message
+      })
+    });
+    const data=await response.json();
+    if(!response.ok||String(data.success).toLowerCase()!=='true')throw new Error('Submission not accepted');
+    form.reset();status.style.color='#bbffdd';
+    status.textContent=lang==='en'?'Thank you! Your message has been submitted. We will contact you if we need more details.':'Takk! Meldingen din er sendt inn. Vi kontakter deg hvis vi trenger flere detaljer.';
+  }catch(error){
+    status.style.color='#ffd0d0';
+    status.textContent=lang==='en'?'We could not submit your message. Please try again or email post@ramstadreklame.no.':'Vi kunne ikke sende meldingen. Prøv igjen eller skriv til post@ramstadreklame.no.';
+  }finally{button.disabled=false}
 });
 
 // Keep the public URL clean: no /index.html and no #section in the address bar.
