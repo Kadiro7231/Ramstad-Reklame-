@@ -48,3 +48,11 @@
 @media(max-width:850px){.rr-grid{grid-template-columns:1fr}.rr-summary{position:static}.rr-root{padding:64px 0}}
 @media(max-width:550px){.rr-panel,.rr-summary{padding:23px 18px;border-radius:18px}.rr-fields{grid-template-columns:1fr}.rr-field.rr-wide{grid-column:auto}.rr-title{font-size:32px}.rr-dialog-inner{padding:20px}}
 @media(prefers-reduced-motion:reduce){.rr-root *{transition:none!important}}
+/* Quote-first payment flow: no payment credentials handled by the website. */
+.rr-payment-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 24px}
+.rr-payment-flow>div{display:flex;align-items:center;gap:11px;padding:15px 13px;border:1px solid #c9e1f8;border-radius:13px;background:#fff;min-width:0;color:#123858;font-size:12px;font-weight:750}
+.rr-payment-flow b{display:grid;place-items:center;flex-shrink:0;width:29px;height:29px;border-radius:9px;background:#087cff;color:#fff;font-size:13px}
+.rr-payment-info{display:block;text-align:center;margin-top:13px;color:#a6e8ff;text-decoration:underline;text-underline-offset:4px;font-weight:750;font-size:12px}
+.rr-payment-info:hover{color:#fff}
+@media(max-width:850px){.rr-payment-flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.rr-payment-flow{gap:8px}.rr-payment-flow>div{padding:11px 9px;font-size:11px;gap:8px}.rr-payment-flow b{width:25px;height:25px}}
