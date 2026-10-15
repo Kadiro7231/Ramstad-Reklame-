@@ -56,3 +56,10 @@
 .rr-payment-info:hover{color:#fff}
 @media(max-width:850px){.rr-payment-flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.rr-payment-flow{gap:8px}.rr-payment-flow>div{padding:11px 9px;font-size:11px;gap:8px}.rr-payment-flow b{width:25px;height:25px}}
+
+/* Direct enquiry submission feedback */
+.rr-status{margin:13px 0 0;padding:0;font-size:13px;line-height:1.6;font-weight:650;color:#305b7e;overflow-wrap:anywhere}
+.rr-status:empty{display:none}
+.rr-success{padding:13px 15px;border:1px solid #84d3a4;border-radius:12px;background:#ebfff1;color:#165d32}
+.rr-error{padding:13px 15px;border:1px solid #e2a7a7;border-radius:12px;background:#fff4f4;color:#922b2b}
+.rr-action:disabled,.rr-secondary:disabled{opacity:.6;cursor:wait;filter:none}
