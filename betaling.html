@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#03142d">
+<meta name="description" content="Slik fungerer forespørsel, tilbud og sikker betaling via Stripe hos Ramstad Reklame. Ingen betaling før skriftlig avtale.">
+<link rel="canonical" href="https://ramstadreklame.no/betaling.html">
+<link rel="icon" href="ramstad-logo-official.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>Betaling etter avtale | Ramstad Reklame</title>
+<style>
+:root{--navy:#03142d;--deep:#092956;--blue:#087cff;--cyan:#18c8ff;--text:#102b49;--muted:#57718c}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;color:var(--text);line-height:1.7;background:#f5f9ff}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1080px,calc(100% - 34px));margin-inline:auto}
+header{position:relative;background:#041a38;color:#fff;border-bottom:1px solid #ffffff24}
+nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:11px;color:#fff;font-size:16px;font-weight:900;letter-spacing:.02em}
+.brand img{width:54px;height:54px;object-fit:contain}
+.brand em{font-style:normal;color:#66d8ff}
+.nav-actions{display:flex;align-items:center;gap:16px}
+.back{font-size:13px;font-weight:800;color:#d7ecff}
+.back:hover,.back:focus-visible{color:#7fe3ff}
+.lang{display:flex;gap:3px;background:#ffffff19;padding:4px;border-radius:40px}
+.lang button{font:800 11px Inter,Arial,sans-serif;background:transparent;color:#c9e6ff;padding:8px 11px;border:none;border-radius:35px;cursor:pointer}
+.lang button.active{background:#087cff;color:#fff}
+.hero{position:relative;isolation:isolate;overflow:hidden;padding:78px 0 95px;color:#fff;background:radial-gradient(circle at 85% 15%,#1376ca4b,transparent 37%),linear-gradient(133deg,#03142d,#092d62)}
+.hero::after{content:"";position:absolute;z-index:-1;width:400px;height:400px;right:-180px;top:-160px;border:1px solid #ffffff20;border-radius:50%;box-shadow:0 0 0 65px #ffffff05,0 0 0 130px #ffffff04}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:#9eeaff;font-weight:800;letter-spacing:.12em;font-size:11px}
+.eyebrow:before{content:"";width:8px;height:8px;background:var(--cyan);border-radius:50%}
+h1{font-size:clamp(38px,6vw,65px);letter-spacing:-.052em;line-height:1.1;margin:18px 0 18px;max-width:900px}
+.lead{font-size:17px;color:#d0e7ff;max-width:780px;margin:0}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:27px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:51px;padding:14px 20px;border-radius:13px;font-weight:850;font-size:14px;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(100deg,#087cff,#14a5ee);color:white}
+.btn-secondary{background:#ffffff13;border:1px solid #ffffff48;color:white}
+main{padding-bottom:65px}
+.content{margin-top:-35px;position:relative;z-index:2}
+.panel{background:white;border-radius:25px;padding:42px;border:1px solid #d8e6f6;box-shadow:0 22px 60px #082e5a12}
+.panel h2{font-size:clamp(26px,3vw,35px);letter-spacing:-.03em;margin:0 0 12px;line-height:1.3}
+.panel>p{color:var(--muted);margin:0 0 25px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.step{padding:22px 19px;border-radius:18px;background:#f5faff;border:1px solid #d9eaff}
+.num{width:37px;height:37px;display:grid;place-items:center;background:#087cff;color:#fff;border-radius:12px;font-size:15px;font-weight:900;margin-bottom:17px}
+.step h3{font-size:15px;line-height:1.45;margin:0 0 9px;color:#073562}
+.step p{font-size:13px;line-height:1.7;color:#5d7791;margin:0}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:17px}
+.note{background:#e6f4ff;border:1px solid #cae3ff;border-radius:19px;padding:24px}
+.note h2{font-size:18px;color:#064382;margin:0 0 9px}
+.note p{font-size:13px;color:#426586;line-height:1.85;margin:0}
+.note a{color:#036cba;text-decoration:underline;text-underline-offset:3px}
+footer{padding:28px 0 36px;border-top:1px solid #dce7f4;color:#627c92;font-size:12px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+footer a{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){nav{min-height:67px}.brand{gap:7px;font-size:12px}.brand img{width:39px;height:39px}.nav-actions{gap:7px}.back{font-size:11px}.lang button{padding:6px 7px}.hero{padding:57px 0 72px}.lead{font-size:15px}.panel{padding:25px 18px;border-radius:19px}.steps,.bottom{grid-template-columns:1fr}.step{padding:18px}.actions{display:grid}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav aria-label="Hovednavigasjon">
+<a href="/" class="brand"><img src="ramstad-logo-official.png" alt="Ramstad Reklame logo"><span>RAMSTAD <em>REKLAME</em></span></a>
+<div class="nav-actions"><a class="back" href="/" data-no="← Til forsiden" data-en="← Back to home">← Til forsiden</a><div class="lang" aria-label="Language"><button id="noBtn" type="button" class="active" aria-pressed="true">NO</button><button id="enBtn" type="button" aria-pressed="false">EN</button></div></div>
+</nav></div></header>
+<main>
+<section class="hero"><div class="wrap">
+<div class="eyebrow" data-no="TRYGG OG TYDELIG PROSESS" data-en="A SAFE, CLEAR PROCESS">TRYGG OG TYDELIG PROSESS</div>
+<h1 data-no="Betaling først etter avtale." data-en="Payment only after agreement.">Betaling først etter avtale.</h1>
+<p class="lead" data-no="Vi tar først imot forespørselen din og blir enige om pris, omfang og levering. Når du har godkjent et skriftlig tilbud, sender Ramstad Reklame en personlig betalingslenke eller faktura via Stripe. Du betaler ikke ved å sende en forespørsel." data-en="First, we review your enquiry and agree on price, scope and delivery. After you approve a written offer, Ramstad Reklame sends you a personal Stripe payment link or invoice. Submitting an enquiry does not involve a payment.">Vi tar først imot forespørselen din og blir enige om pris, omfang og levering. Når du har godkjent et skriftlig tilbud, sender Ramstad Reklame en personlig betalingslenke eller faktura via Stripe. Du betaler ikke ved å sende en forespørsel.</p>
+<div class="actions"><a class="btn btn-primary" href="index.html#rr-offers" data-no="Send en forespørsel ↗" data-en="Send an enquiry ↗">Send en forespørsel ↗</a><a class="btn btn-secondary" href="mailto:post@ramstadreklame.no" data-no="Kontakt oss" data-en="Contact us">Kontakt oss</a></div>
+</div></section>
+<div class="wrap content">
+<section class="panel" aria-labelledby="steps-title">
+<h2 id="steps-title" data-no="Fire enkle steg" data-en="Four simple steps">Fire enkle steg</h2>
+<p data-no="Vi starter ikke betalingen før vi er enige om detaljene." data-en="We do not start the payment process until we have agreed on the details.">Vi starter ikke betalingen før vi er enige om detaljene.</p>
+<div class="steps">
+<div class="step"><div class="num">1</div><h3 data-no="Send forespørsel" data-en="Send an enquiry">Send forespørsel</h3><p data-no="Fortell oss hvilken tjeneste du trenger. Forespørselen er ikke et bindende kjøp." data-en="Tell us what service you need. An enquiry is not a binding purchase.">Fortell oss hvilken tjeneste du trenger. Forespørselen er ikke et bindende kjøp.</p></div>
+<div class="step"><div class="num">2</div><h3 data-no="Få et skriftlig tilbud" data-en="Receive a written offer">Få et skriftlig tilbud</h3><p data-no="Vi avklarer pris, leveranse, betalingsvilkår og eventuell MVA før du godkjenner." data-en="We clarify price, delivery, payment terms and any applicable VAT before you approve.">Vi avklarer pris, leveranse, betalingsvilkår og eventuell MVA før du godkjenner.</p></div>
+<div class="step"><div class="num">3</div><h3 data-no="Motta betalingslenke" data-en="Receive a payment link">Motta betalingslenke</h3><p data-no="Etter din godkjenning sender vi lenken eller fakturaen direkte til deg via Stripe." data-en="After your approval, we send a Stripe payment link or invoice directly to you.">Etter din godkjenning sender vi lenken eller fakturaen direkte til deg via Stripe.</p></div>
+<div class="step"><div class="num">4</div><h3 data-no="Betal på en sikker side" data-en="Pay on a secure page">Betal på en sikker side</h3><p data-no="Kontroller beløpet og betalingsmottakeren før du betaler på den sikre betalingsløsningen." data-en="Check the amount and merchant name before paying on the secure checkout page.">Kontroller beløpet og betalingsmottakeren før du betaler på den sikre betalingssiden.</p></div>
+</div>
+</section>
+<div class="bottom">
+<section class="note"><h2 data-no="Beskytt kortopplysningene dine" data-en="Protect your card details">Beskytt kortopplysningene dine</h2><p data-no="Vi ber aldri om kortnummer, CVC eller kortbilder via e-post eller kontaktskjema. Betal kun gjennom betalingslenken du har fått etter avtalen." data-en="We never ask for card numbers, CVC codes or card photos through email or contact forms. Pay only through the link sent to you after the agreement.">Vi ber aldri om kortnummer, CVC eller kortbilder via e-post eller kontaktskjema. Betal kun gjennom betalingslenken du har fått etter avtalen.</p></section>
+<section class="note"><h2 data-no="Spørsmål om faktura eller betaling?" data-en="Questions about an invoice or payment?">Spørsmål om faktura eller betaling?</h2><p data-no="Kontakt oss på " data-en="Contact us at ">Kontakt oss på </p><p><a href="mailto:post@ramstadreklame.no">post@ramstadreklame.no</a></p><p data-no="Les også vår personvernerklæring." data-en="You can also read our privacy policy.">Les også vår personvernerklæring.</p><p><a href="personvern.html" data-no="Personvernerklæring ↗" data-en="Privacy policy ↗">Personvernerklæring ↗</a></p></section>
+</div>
+</div>
+</main>
+<footer><div class="wrap"><span>© 2026 Ramstad Reklame</span><a href="personvern.html" data-no="Personvern" data-en="Privacy">Personvern</a></div></footer>
+<script>
+(function(){
+const no=document.getElementById('noBtn'),en=document.getElementById('enBtn');
+function setLang(code){
+document.documentElement.lang=code;
+document.querySelectorAll('[data-no][data-en]').forEach(el=>{el.textContent=el.dataset[code]});
+no.classList.toggle('active',code==='no');en.classList.toggle('active',code==='en');
+no.setAttribute('aria-pressed',String(code==='no'));en.setAttribute('aria-pressed',String(code==='en'));
+}
+no.addEventListener('click',()=>setLang('no'));
+en.addEventListener('click',()=>setLang('en'));
+})();
+</script>
+</body></html>
