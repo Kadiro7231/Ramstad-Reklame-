@@ -114,7 +114,7 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
       body:JSON.stringify({
         _subject:'Ramstad Reklame – '+L('Forespørsel','Enquiry')+' – '+findProduct()[lang()],
         _replyto:saved.email,
-        _template:'table',
+        _template:'basic',
         _url:window.location.href,
         _honey:'',
         name:saved.name.trim(),
@@ -122,7 +122,7 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
         email:saved.email.trim(),
         category:catalog[chosenCategory][lang()],
         service:findProduct()[lang()],
-        details:makeBody()
+        message:makeBody()
       })
     });
     const data=await response.json();
