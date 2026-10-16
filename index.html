@@ -329,7 +329,7 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
         <div class="kicker" style="color:#c9ebff" data-no="La oss skape noe sammen" data-en="Let’s create something together">La oss skape noe sammen</div>
         <h2 data-no="Klar for å gjøre bedriften mer synlig?" data-en="Ready to make your business more visible?">Klar for å gjøre bedriften mer synlig?</h2>
         <p data-no="Send oss en melding, så finner vi en løsning som passer behovet ditt." data-en="Send us a message and we’ll find a solution that fits your needs.">Send oss en melding, så finner vi en løsning som passer behovet ditt.</p>
-        <form class="contact-form" id="contactForm" method="POST" action="https://formsubmit.co/post@ramstadreklame.no">
+        <form class="contact-form" id="contactForm">
           <input id="name" name="name" maxlength="120" autocomplete="name" required type="text" data-ph-no="Navn" data-ph-en="Name" placeholder="Navn">
           <input id="company" name="company" maxlength="120" autocomplete="organization" type="text" data-ph-no="Bedrift" data-ph-en="Company" placeholder="Bedrift">
           <input id="email" name="email" maxlength="200" autocomplete="email" required type="email" data-ph-no="E-post" data-ph-en="Email" placeholder="E-post">
@@ -372,42 +372,43 @@ const observer=new IntersectionObserver(entries=>{
 },{threshold:.12,rootMargin:'0px 0px -35px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-document.getElementById('contactForm').addEventListener('submit',e=>{
+document.getElementById('contactForm').addEventListener('submit',async e=>{
+  e.preventDefault();
   const form=e.currentTarget;
+  if(!form.reportValidity())return;
   const lang=document.documentElement.lang||'no';
   const name=document.getElementById('name').value.trim();
   const company=document.getElementById('company').value.trim();
   const email=document.getElementById('email').value.trim();
   const message=document.getElementById('message').value.trim();
   const status=document.getElementById('contactStatus');
-  if(!form.reportValidity()||!name||!email||!message){
-    e.preventDefault();
-    status.textContent=lang==='en'?'Please fill in all required fields.':'Fyll ut alle obligatoriske felt.';
+  if(!name||!email||!message){
+    status.textContent=lang==='en'?'Please fill in the required fields.':'Fyll ut alle obligatoriske felt.';
     return;
   }
-  // Keep the original visible, named form fields and let the browser POST them
-  // directly to FormSubmit. This preserves the full contents of the message.
-  const data=new FormData(form);
-  if(!String(data.get('name')||'').trim()||!String(data.get('email')||'').trim()||!String(data.get('message')||'').trim()){
-    e.preventDefault();
-    status.textContent=lang==='en'?'The message is empty. Please try again.':'Meldingen er tom. Prøv igjen.';
-    return;
+  const button=form.querySelector('button[type="submit"]');
+  button.disabled=true;
+  form.setAttribute('aria-busy','true');
+  status.style.color='#eaf7ff';
+  status.textContent=lang==='en'?'Sending your message…':'Sender meldingen…';
+  try{
+    await window.RamstadWeb3Forms.send({
+      name,email,
+      company:company||(lang==='en'?'Not provided':'Ikke oppgitt'),
+      message,
+      subject:('Ramstad Reklame | '+name.slice(0,50)+' | '+email.slice(0,90)).slice(0,180)
+    });
+    status.style.color='#b7f5d3';
+    status.textContent=lang==='en'?'Message sent!':'Meldingen er sendt!';
+    window.location.assign('takk.html?type=contact');
+  }catch(err){
+    console.error('Contact delivery failed',err);
+    status.style.color='#ffd3d3';
+    status.textContent=lang==='en'?'Your message could not be sent. Please try again or email post@ramstadreklame.no.':'Meldingen kunne ikke sendes. Prøv igjen eller skriv til post@ramstadreklame.no.';
+  }finally{
+    button.disabled=false;
+    form.removeAttribute('aria-busy');
   }
-  const hiddenFields={
-    _subject:('Ramstad Reklame | '+name.slice(0,50)+' | '+email.slice(0,90)).slice(0,200),
-    _replyto:email,
-    _template:'table'
-  };
-  for(const [key,value] of Object.entries(hiddenFields)){
-    let el=form.querySelector('input[name="'+key+'"]');
-    if(!el){el=document.createElement('input');el.type='hidden';el.name=key;form.appendChild(el)}
-    el.value=value;
-  }
-  form.action='https://formsubmit.co/post@ramstadreklame.no';
-  form.method='POST';
-  form.acceptCharset='UTF-8';
-  form.enctype='application/x-www-form-urlencoded';
-  form.target='_self';
 });
 
 // Keep the public URL clean: no /index.html and no #section in the address bar.
@@ -431,7 +432,9 @@ document.getElementById('contactForm').addEventListener('submit',e=>{
 })();
 
 </script>
-<script src="rr-order.js?v=20261016-fix-orders-5" defer></script>
+<script src="rr-forms-config.js?v=20261016" defer></script>
+<script src="rr-web3forms.js?v=20261016" defer></script>
+<script src="rr-order.js?v=20261016-web3forms-1" defer></script>
 <script src="rr-analytics.js" defer></script>
 </body>
 </html>
