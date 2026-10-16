@@ -372,7 +372,7 @@ const observer=new IntersectionObserver(entries=>{
 },{threshold:.12,rootMargin:'0px 0px -35px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-document.getElementById('contactForm').addEventListener('submit',async e=>{
+document.getElementById('contactForm').addEventListener('submit',e=>{
   e.preventDefault();
   const form=e.currentTarget;
   if(!form.reportValidity())return;
@@ -383,33 +383,21 @@ document.getElementById('contactForm').addEventListener('submit',async e=>{
   const message=document.getElementById('message').value.trim();
   if(!name||!email||!message)return;
   const subject=lang==='en'?`Website inquiry from ${name}${company?' - '+company:''}`:`Forespørsel fra ${name}${company?' - '+company:''}`;
-  const status=document.getElementById('contactStatus');
-  const button=form.querySelector('button[type="submit"]');
-  button.disabled=true;status.style.color='#c5efff';
-  status.textContent=lang==='en'?'Sending your message…':'Sender meldingen…';
-  try{
-    const response=await fetch('https://formsubmit.co/ajax/post@ramstadreklame.no',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({
-        _subject:subject,
-        _replyto:email,
-        _template:'table',
-        _url:window.location.href,
-        name:name,
-        company:company||'–',
-        email:email,
-        message:message
-      })
-    });
-    const data=await response.json();
-    if(!response.ok||String(data.success).toLowerCase()!=='true')throw new Error('Submission not accepted');
-    form.reset();status.style.color='#bbffdd';
-    status.textContent=lang==='en'?'Thank you! Your message has been submitted. We will contact you if we need more details.':'Takk! Meldingen din er sendt inn. Vi kontakter deg hvis vi trenger flere detaljer.';
-  }catch(error){
-    status.style.color='#ffd0d0';
-    status.textContent=lang==='en'?'We could not submit your message. Please try again or email post@ramstadreklame.no.':'Vi kunne ikke sende meldingen. Prøv igjen eller skriv til post@ramstadreklame.no.';
-  }finally{button.disabled=false}
+  // Submit as a normal HTML form; FormSubmit displays its own result page.
+  form.method='POST';
+  form.action='https://formsubmit.co/post@ramstadreklame.no';
+  form.acceptCharset='UTF-8';
+  const hiddenFields={
+    _subject:subject,
+    _replyto:email,
+    _template:'basic'
+  };
+  Object.entries(hiddenFields).forEach(([key,value])=>{
+    let input=form.querySelector('input[name="'+key+'"]');
+    if(!input){input=document.createElement('input');input.type='hidden';input.name=key;form.appendChild(input)}
+    input.value=value;
+  });
+  form.submit();
 });
 
 // Keep the public URL clean: no /index.html and no #section in the address bar.
