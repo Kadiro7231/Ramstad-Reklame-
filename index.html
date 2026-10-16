@@ -372,49 +372,42 @@ const observer=new IntersectionObserver(entries=>{
 },{threshold:.12,rootMargin:'0px 0px -35px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-document.getElementById('contactForm').addEventListener('submit',async e=>{
-  e.preventDefault();
+document.getElementById('contactForm').addEventListener('submit',e=>{
   const form=e.currentTarget;
-  if(!form.reportValidity())return;
   const lang=document.documentElement.lang||'no';
   const name=document.getElementById('name').value.trim();
   const company=document.getElementById('company').value.trim();
   const email=document.getElementById('email').value.trim();
   const message=document.getElementById('message').value.trim();
-  if(!name||!email||!message)return;
-  const subject=lang==='en'?`Website inquiry from ${name}${company?' - '+company:''}`:`Forespørsel fra ${name}${company?' - '+company:''}`;
   const status=document.getElementById('contactStatus');
-  const button=form.querySelector('button[type="submit"]');
-  button.disabled=true;form.setAttribute('aria-busy','true');
-  status.style.color='#eaf7ff';
-  status.textContent=lang==='en'?'Sending your message…':'Sender meldingen…';
-  try{
-    const response=await fetch('https://formsubmit.co/ajax/post@ramstadreklame.no',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({
-        name,
-        email,
-        company:company||(lang==='en'?'Not provided':'Ikke oppgitt'),
-        message,
-        _subject:subject,
-        _replyto:email,
-        _template:'table'
-      })
-    });
-    const result=await response.json();
-    if(!response.ok||String(result.success).toLowerCase()!=='true'){
-      throw new Error(result&&result.message||'FormSubmit did not confirm delivery');
-    }
-    status.style.color='#b7f5d3';
-    status.textContent=lang==='en'?'Message sent! We will be in touch.':'Meldingen er sendt! Vi tar kontakt med deg.';
-    form.reset();
-  }catch(err){
-    status.style.color='#ffd3d3';
-    status.textContent=lang==='en'?'Delivery could not be confirmed. Please try again or email post@ramstadreklame.no.':'Vi kunne ikke bekrefte sendingen. Prøv igjen eller send e-post til post@ramstadreklame.no.';
-  }finally{
-    button.disabled=false;form.removeAttribute('aria-busy');
+  if(!form.reportValidity()||!name||!email||!message){
+    e.preventDefault();
+    status.textContent=lang==='en'?'Please fill in all required fields.':'Fyll ut alle obligatoriske felt.';
+    return;
   }
+  // Keep the original visible, named form fields and let the browser POST them
+  // directly to FormSubmit. This preserves the full contents of the message.
+  const data=new FormData(form);
+  if(!String(data.get('name')||'').trim()||!String(data.get('email')||'').trim()||!String(data.get('message')||'').trim()){
+    e.preventDefault();
+    status.textContent=lang==='en'?'The message is empty. Please try again.':'Meldingen er tom. Prøv igjen.';
+    return;
+  }
+  const hiddenFields={
+    _subject:('Ramstad Reklame | '+name.slice(0,50)+' | '+email.slice(0,90)).slice(0,200),
+    _replyto:email,
+    _template:'table'
+  };
+  for(const [key,value] of Object.entries(hiddenFields)){
+    let el=form.querySelector('input[name="'+key+'"]');
+    if(!el){el=document.createElement('input');el.type='hidden';el.name=key;form.appendChild(el)}
+    el.value=value;
+  }
+  form.action='https://formsubmit.co/post@ramstadreklame.no';
+  form.method='POST';
+  form.acceptCharset='UTF-8';
+  form.enctype='application/x-www-form-urlencoded';
+  form.target='_self';
 });
 
 // Keep the public URL clean: no /index.html and no #section in the address bar.
@@ -438,7 +431,7 @@ document.getElementById('contactForm').addEventListener('submit',async e=>{
 })();
 
 </script>
-<script src="rr-order.js?v=20261016-fix-orders-4" defer></script>
+<script src="rr-order.js?v=20261016-fix-orders-5" defer></script>
 <script src="rr-analytics.js" defer></script>
 </body>
 </html>
