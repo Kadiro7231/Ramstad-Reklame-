@@ -87,7 +87,7 @@ function create(){
  '<button class="rr-action" type="submit" form="rr-form">'+L('Gjennomgå forespørsel','Review enquiry')+' ↗</button>'+
  '<div class="rr-hint">'+L('Forespørselen sendes direkte fra nettstedet. Vi kontakter deg dersom vi trenger flere detaljer, og avtaler pris før eventuell betaling.','Your enquiry is submitted from this website. We will contact you if we need more details and agree the price before any payment.')+'</div><a class="rr-payment-info" href="betaling.html">'+L('Les om sikker betaling etter avtale ↗','Learn about secure payment after agreement ↗')+'</a></aside></div></div>'+
  '<dialog class="rr-dialog" id="rr-dialog" aria-labelledby="rr-review-title"><div class="rr-dialog-inner"><h3 id="rr-review-title">'+L('Kontroller forespørselen','Review your enquiry')+'</h3><p>'+L('Er opplysningene riktige? Du kan gå tilbake og endre før du sender forespørselen.','Are the details correct? You can go back and make changes before submitting your enquiry.')+'</p><div class="rr-review" id="rr-review-text"></div>'+
- '<p>'+L('Ved innsending sendes opplysningene via FormSubmit.co til oss. Dette er ikke betaling eller bindende kjøp.','When submitted, the information is forwarded to us via FormSubmit.co. This is not a payment or binding purchase.')+'</p>'+
+ '<p>'+L('Ved innsending sendes opplysningene via Web3Forms til oss. Dette er ikke betaling eller bindende kjøp.','When submitted, the information is forwarded to us via Web3Forms. This is not a payment or binding purchase.')+'</p>'+
  '<div class="rr-status" id="rr-dialog-status" role="status" aria-live="polite"></div><div class="rr-dialog-actions"><button type="button" class="rr-secondary" id="rr-edit">'+L('Gå tilbake','Go back')+'</button><button type="button" class="rr-action" id="rr-send">'+L('Send din forespørsel','Send your request')+'</button></div></div></dialog>';
 const form=root.querySelector('#rr-form');
 form.addEventListener('input',()=>{capture();summary()});
@@ -99,63 +99,48 @@ form.addEventListener('submit',e=>{e.preventDefault();capture();if(!form.reportV
  const d=root.querySelector('#rr-dialog');root.querySelector('#rr-review-text').textContent=makeBody();d.showModal();
 });
 root.querySelector('#rr-edit').addEventListener('click',()=>root.querySelector('#rr-dialog').close());
-root.querySelector('#rr-send').addEventListener('click',()=>{
+root.querySelector('#rr-send').addEventListener('click',async()=>{
   const button=root.querySelector('#rr-send');
+  const edit=root.querySelector('#rr-edit');
   const status=root.querySelector('#rr-dialog-status');
   if(button.disabled)return;
   status.className='rr-status';
-  try{
+  try {
     capture();
     const product=findProduct();
-    if(!saved.name.trim()||!saved.email.trim()||!product||!form.reportValidity()){
-      throw new Error('Missing required order fields');
+    if(!product || !saved.name.trim() || !saved.email.trim() || !form.reportValidity()){
+      throw new Error('FORM_DATA_MISSING');
     }
-    // Use real HTML named fields and standard browser POST. FormSubmit's HTML
-    // endpoint displays the original thank-you page after accepting the form.
-    // The complete formatted enquiry is sent as the actual message textarea.
-    const fullMessage=makeBody();
-    if(!fullMessage.trim()||!fullMessage.includes(saved.email.trim())||!fullMessage.includes(product[lang()])){
-      throw new Error('The complete order summary was not built');
+    const completeMessage=makeBody();
+    if(!completeMessage.trim() || !completeMessage.includes(saved.email.trim()) ||
+       !completeMessage.includes(product[lang()])){
+      throw new Error('ORDER_SUMMARY_MISSING');
     }
-    const messageField=form.querySelector('#rr-message');
-    messageField.value=fullMessage;
-    const info=lines();
-    const details={
-      service_name:product[lang()],
+    const summaryData=lines();
+    const fields={
+      name:saved.name.trim(),
+      email:saved.email.trim(),
+      company:saved.company.trim()||L('Ikke oppgitt','Not provided'),
       service_category:catalog[chosenCategory][lang()],
+      service_name:product[lang()],
+      service_id:product.id,
       selected_extras:saved.extras.map(id=>extras.find(x=>x.id===id)).filter(Boolean).map(ex=>ex[lang()]+' +'+money(ex.price)).join(' | ')||L('Ingen','None'),
-      indicative_total:product.quote?L('Pris etter avtale','Price by quotation'):(info.variable?L('Fra ','From '):'')+money(info.cost),
-      _subject:('Ramstad Reklame | '+saved.name.trim().slice(0,45)+' | '+product[lang()].slice(0,60)+' | '+saved.email.trim().slice(0,90)).slice(0,250),
-      _replyto:saved.email.trim(),
-      _template:'table'
+      indicative_total:product.quote?L('Pris etter avtale','Price by quotation'):(summaryData.variable?L('Fra ','From '):'')+money(summaryData.cost),
+      customer_message:saved.message.trim()||L('Ingen ekstra kommentar','No additional notes'),
+      message:completeMessage,
+      subject:('Ramstad Reklame | '+saved.name.trim().slice(0,45)+' | '+product[lang()].slice(0,70)).slice(0,160)
     };
-    for(const [key,value] of Object.entries(details)){
-      let field=form.querySelector('[name="'+key+'"]');
-      if(!field){
-        field=document.createElement('input');
-        field.type='hidden';
-        field.name=key;
-        form.appendChild(field);
-      }
-      field.value=String(value);
-    }
-    const outgoing=new FormData(form);
-    for(const key of ['name','email','message','service_name']){
-      if(!String(outgoing.get(key)||'').trim())throw new Error('Missing submitted field: '+key);
-    }
-    if(String(outgoing.get('message')).length<100)throw new Error('Order details are incomplete');
-    form.method='POST';
-    form.action='https://formsubmit.co/post@ramstadreklame.no';
-    form.enctype='application/x-www-form-urlencoded';
-    form.acceptCharset='UTF-8';
-    form.target='_self';
-    // FormSubmit's standard HTML submission will return the familiar Thanks! page.
-    button.disabled=true;
-    HTMLFormElement.prototype.submit.call(form);
+    button.disabled=true;edit.disabled=true;
+    status.textContent=L('Sender forespørselen…','Sending your enquiry…');
+    await window.RamstadWeb3Forms.send(fields);
+    status.className='rr-status rr-success';
+    status.textContent=L('Forespørselen er sendt!','Your enquiry was sent!');
+    window.location.assign('takk.html?type=offer');
   }catch(err){
+    console.error('Order delivery failed',err);
     status.className='rr-status rr-error';
-    status.textContent=L('Kunne ikke sende forespørselen. Prøv igjen, eller skriv til post@ramstadreklame.no.','Could not send your enquiry. Please retry or email post@ramstadreklame.no.');
-    button.disabled=false;
+    status.textContent=L('Forespørselen kunne ikke sendes. Prøv igjen eller kontakt post@ramstadreklame.no.','Your enquiry could not be sent. Please try again or email post@ramstadreklame.no.');
+    button.disabled=false;edit.disabled=false;
   }
 });
 summary();
