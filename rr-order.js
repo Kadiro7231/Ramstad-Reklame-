@@ -108,38 +108,38 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
   status.className='rr-status';
   status.textContent=L('Sender forespørselen…','Sending your enquiry…');
   try{
-    const response=await fetch('https://formsubmit.co/ajax/post@ramstadreklame.no',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({
-        _subject:'Ramstad Reklame – '+L('Forespørsel','Enquiry')+' – '+findProduct()[lang()],
-        _replyto:saved.email,
-        _template:'basic',
-        _url:window.location.href,
-        _honey:'',
-        name:saved.name.trim(),
-        company:saved.company.trim()||'–',
-        email:saved.email.trim(),
-        category:catalog[chosenCategory][lang()],
-        service:findProduct()[lang()],
-        message:makeBody()
-      })
+    // Native HTML form POST lets FormSubmit receive the order as standard form fields.
+    const submission=document.createElement('form');
+    submission.method='POST';
+    submission.action='https://formsubmit.co/post@ramstadreklame.no';
+    submission.acceptCharset='UTF-8';
+    submission.style.display='none';
+    const fields={
+      _subject:'Ramstad Reklame – '+L('Forespørsel','Enquiry')+' – '+findProduct()[lang()],
+      _replyto:saved.email.trim(),
+      _template:'basic',
+      name:saved.name.trim(),
+      company:saved.company.trim()||'–',
+      email:saved.email.trim(),
+      category:catalog[chosenCategory][lang()],
+      service:findProduct()[lang()],
+      message:makeBody()
+    };
+    Object.entries(fields).forEach(([key,value])=>{
+      const input=document.createElement('input');
+      input.type='hidden';
+      input.name=key;
+      input.value=String(value);
+      submission.appendChild(input);
     });
-    const data=await response.json();
-    if(!response.ok||String(data.success).toLowerCase()!=='true')throw new Error('relay failed');
-    root.querySelector('#rr-dialog').close();
-    const finalStatus=root.querySelector('#rr-form-status');
-    finalStatus.className='rr-status rr-success';
-    finalStatus.textContent=L('Takk! Forespørselen er registrert. Vi kontakter deg hvis vi trenger flere detaljer.','Thank you! Your enquiry has been registered. We will contact you if we need more information.');
-    saved={product:'',extras:[],name:'',company:'',email:'',message:''};
-    create();
-    const cleanStatus=root.querySelector('#rr-form-status');
-    cleanStatus.className='rr-status rr-success';
-    cleanStatus.textContent=L('Takk! Forespørselen er registrert. Vi kontakter deg hvis vi trenger flere detaljer.','Thank you! Your enquiry has been registered. We will contact you if we need more information.');
+    document.body.appendChild(submission);
+    // The browser navigates to FormSubmit's own confirmation/CAPTCHA page.
+    submission.submit();
   }catch(err){
     status.className='rr-status rr-error';
-    status.textContent=L('Forespørselen ble ikke sendt. Prøv igjen eller skriv til post@ramstadreklame.no.','Your enquiry was not submitted. Please try again or email post@ramstadreklame.no.');
-  }finally{button.disabled=false;edit.disabled=false}
+    status.textContent=L('Forespørselen kunne ikke sendes. Prøv igjen eller skriv til post@ramstadreklame.no.','The enquiry could not be submitted. Please retry or email post@ramstadreklame.no.');
+    button.disabled=false;edit.disabled=false;
+  }
 });
 summary();
 }
