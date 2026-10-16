@@ -6,6 +6,8 @@
   const consentLifetime = 180 * 24 * 60 * 60 * 1000;
   let loaded = false;
   let banner = null;
+  let overlay = null;
+  let focusedBeforeDialog = null;
 
   function english() {
     return document.documentElement.lang === 'en';
@@ -62,7 +64,8 @@
   function addStyles() {
     const style = document.createElement('style');
     style.textContent =
-      '#rr-cookie-banner{position:fixed;bottom:14px;left:14px;right:14px;max-width:620px;margin:auto;z-index:10000;background:#fff;color:#10233c;border:1px solid #c7dff6;box-shadow:0 16px 55px #061a3566;border-radius:17px;padding:20px 22px;font-family:Inter,Arial,sans-serif;line-height:1.5}' +
+      '#rr-cookie-overlay{position:fixed!important;inset:0!important;z-index:2147483000!important;display:flex!important;align-items:center!important;justify-content:center!important;background:rgba(3,16,36,.74)!important;padding:18px!important;overflow-y:auto!important;box-sizing:border-box!important}' +
+      '#rr-cookie-banner{position:relative!important;display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;width:min(100%,540px)!important;max-width:540px!important;max-height:calc(100dvh - 36px)!important;overflow-y:auto!important;margin:auto!important;background:#fff!important;color:#10233c!important;border:1px solid #c7dff6!important;box-shadow:0 18px 70px #061a35aa!important;border-radius:17px!important;padding:24px!important;font-family:Inter,Arial,sans-serif!important;line-height:1.5!important}' +
       '#rr-cookie-banner h2{font-size:16px;margin:0 0 6px;color:#082d57;font-weight:800}' +
       '#rr-cookie-banner p{font-size:13px;line-height:1.55;margin:0 0 13px;color:#3f5570}' +
       '#rr-cookie-banner a{color:#096ad5;text-decoration:underline}' +
@@ -71,12 +74,17 @@
       '#rr-cookie-yes{background:#087cff;border:1px solid #087cff;color:#fff}' +
       '#rr-cookie-no{background:#fff;border:1px solid #8ba9c9;color:#183c62}' +
       '#rr-cookie-settings{border:0;background:none;color:inherit;font:inherit;font-size:12px;text-decoration:underline;cursor:pointer;padding:3px 6px;margin:5px 0;opacity:.85}' +
-      '@media(max-width:480px){#rr-cookie-banner{padding:16px;bottom:8px;left:8px;right:8px}#rr-cookie-banner button{min-width:0}}';
+      '@media(max-width:480px){#rr-cookie-overlay{padding:12px!important}#rr-cookie-banner{padding:20px!important}#rr-cookie-banner button{min-width:0}}';
     document.head.appendChild(style);
   }
   function closeBanner() {
-    if (banner) banner.remove();
+    if (overlay) overlay.remove();
+    overlay = null;
     banner = null;
+    if (focusedBeforeDialog && typeof focusedBeforeDialog.focus === 'function') {
+      focusedBeforeDialog.focus({ preventScroll: true });
+    }
+    focusedBeforeDialog = null;
   }
   function selectConsent(value) {
     const previous = getConsent();
@@ -90,16 +98,32 @@
     }
   }
   function showBanner() {
-    if (banner) return;
+    if (banner && document.body.contains(banner)) return;
+    focusedBeforeDialog = document.activeElement;
+    overlay = document.createElement('div');
+    overlay.id = 'rr-cookie-overlay';
     banner = document.createElement('section');
     banner.id = 'rr-cookie-banner';
     banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Valg av analyseinformasjonskapsler');
+    banner.setAttribute('aria-modal', 'true');
+    banner.setAttribute('aria-labelledby', 'rr-cookie-heading');
+    banner.setAttribute('aria-describedby', 'rr-cookie-description');
     banner.innerHTML = '<h2 id="rr-cookie-heading"></h2><p id="rr-cookie-description"></p><div class="rr-cookie-actions"><button type="button" id="rr-cookie-no"></button><button type="button" id="rr-cookie-yes"></button></div>';
-    document.body.appendChild(banner);
+    overlay.appendChild(banner);
+    document.body.appendChild(overlay);
     banner.querySelector('#rr-cookie-no').addEventListener('click', function () { selectConsent('rejected'); });
     banner.querySelector('#rr-cookie-yes').addEventListener('click', function () { selectConsent('accepted'); });
+    banner.addEventListener('keydown', function (event) {
+      if (event.key !== 'Tab') return;
+      const controls = Array.from(banner.querySelectorAll('a[href],button:not([disabled])'));
+      if (!controls.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
     translateBanner();
+    banner.querySelector('#rr-cookie-no').focus({ preventScroll: true });
   }
   function translateBanner() {
     if (!banner) return;
