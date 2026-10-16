@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#06152e">
+<meta name="robots" content="noindex, nofollow">
+<title>Takk for henvendelsen – Ramstad Reklame</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+body{min-height:100vh;margin:0;background:radial-gradient(circle at 15% 12%,#173c7d 0,transparent 42%),linear-gradient(135deg,#030b1d,#0a2550 67%,#06152e);color:#f5faff;display:flex;flex-direction:column}
+header{padding:24px max(22px,calc((100vw - 1100px)/2));display:flex;align-items:center;gap:13px}
+header img{width:52px;height:52px;object-fit:contain}
+header strong{font-size:15px;letter-spacing:.085em}
+header strong span{color:#6fcaff}
+main{flex:1;display:grid;place-items:center;padding:30px 20px 68px}
+.panel{width:min(100%,600px);border:1px solid rgba(169,205,248,.24);border-radius:24px;background:linear-gradient(135deg,rgba(19,51,100,.76),rgba(8,22,49,.91));box-shadow:0 25px 80px rgba(0,0,0,.25);padding:clamp(28px,6vw,52px);text-align:center}
+.check{width:84px;height:84px;display:grid;place-items:center;margin:0 auto 24px;border-radius:50%;background:#0d623f;color:#c9ffe1;font-size:41px;font-weight:700}
+h1{font-size:clamp(30px,5vw,42px);letter-spacing:-.025em;margin:0 0 12px}
+p{color:#ceddf2;line-height:1.8;margin:0 auto 26px;font-size:17px;max-width:440px}
+a.btn{display:inline-block;padding:14px 23px;border-radius:12px;background:linear-gradient(135deg,#1a89e8,#34b1ec);color:#001329;text-decoration:none;font-weight:750}
+a.mail{color:#91d9ff;text-decoration:underline}
+footer{padding:22px;text-align:center;color:#b9cce8;font-size:13px}
+@media(max-width:460px){header{padding:18px 22px}.panel{border-radius:18px}}
+</style>
+</head>
+<body>
+<header><img src="ramstad-logo-official.png" alt="Ramstad Reklame logo"><strong>RAMSTAD <span>REKLAME</span></strong></header>
+<main><section class="panel" aria-labelledby="thanks-heading">
+<div class="check" aria-hidden="true">✓</div>
+<h1 id="thanks-heading" data-no="Takk for henvendelsen!" data-en="Thank you for your enquiry!">Takk for henvendelsen!</h1>
+<p data-no="Vi har mottatt forespørselen din og tar kontakt så snart vi kan. Dette er ikke en bindende bestilling eller betaling." data-en="We've received your enquiry and will be in touch as soon as possible. This is not a binding order or payment.">Vi har mottatt forespørselen din og tar kontakt så snart vi kan. Dette er ikke en bindende bestilling eller betaling.</p>
+<a class="btn" href="/" data-no="Tilbake til forsiden →" data-en="Back to homepage →">Tilbake til forsiden →</a>
+</section></main>
+<footer>© 2026 Ramstad Reklame · <a class="mail" href="mailto:post@ramstadreklame.no">post@ramstadreklame.no</a></footer>
+<script>
+const lang=localStorage.getItem('ramstad_lang')==='en'?'en':'no';
+document.documentElement.lang=lang;
+document.querySelectorAll('[data-no][data-en]').forEach(el=>el.textContent=el.dataset[lang]);
+</script>
+</body>
+</html>
