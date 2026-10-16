@@ -108,40 +108,45 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
   status.className='rr-status';
   status.textContent=L('Sender forespørselen…','Sending your enquiry…');
   try{
-    // Use the same visible, named form fields as the working contact form.
-    // Avoid a separate form containing only hidden inputs.
+    // Send explicit named fields to FormSubmit's documented AJAX endpoint.
+    // The message also contains the complete service, extras, pricing and client details.
+    // This avoids navigating customers to an external form result page.
     capture();
-    const orderMessage=makeBody();
-    const messageField=form.querySelector('#rr-message');
-    if(!saved.name.trim()||!saved.email.trim()||!findProduct()||!form.reportValidity()){
+    const product=findProduct();
+    if(!saved.name.trim()||!saved.email.trim()||!product||!form.reportValidity()){
       throw new Error('Missing required order fields');
     }
-    // Include selected service, extras, line prices, total and contact details
-    // in the existing real textarea with name="message".
-    messageField.value=orderMessage;
-    form.method='POST';
-    form.action='https://formsubmit.co/post@ramstadreklame.no';
-    form.acceptCharset='UTF-8';
-    const fields={
-      _subject:'Ramstad Reklame – '+L('Forespørsel','Enquiry')+' – '+findProduct()[lang()],
+    const summary=lines();
+    const payload={
+      name:saved.name.trim(),
+      email:saved.email.trim(),
+      company:saved.company.trim()||L('Ikke oppgitt','Not provided'),
+      category:catalog[chosenCategory][lang()],
+      service:product[lang()],
+      extras:saved.extras.map(id=>extras.find(ex=>ex.id===id)).filter(Boolean).map(ex=>ex[lang()]).join(' | ')||L('Ingen','None'),
+      indicative_total:product.quote?L('Pris etter avtale','Price by quotation'):(summary.variable?L('Fra ','From '):'')+money(summary.cost),
+      message:makeBody(),
+      _subject:'Ramstad Reklame – '+L('Forespørsel','Enquiry')+' – '+product[lang()],
       _replyto:saved.email.trim(),
-      _template:'basic'
+      _template:'table'
     };
-    Object.entries(fields).forEach(([key,value])=>{
-      let input=form.querySelector('input[name="'+key+'"]');
-      if(!input){
-        input=document.createElement('input');
-        input.type='hidden';
-        input.name=key;
-        form.appendChild(input);
-      }
-      input.value=String(value);
+    const response=await fetch('https://formsubmit.co/ajax/post@ramstadreklame.no',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(payload)
     });
-    // Native submit bypasses the 'review' event handler intentionally.
-    form.submit();
+    const result=await response.json();
+    if(!response.ok||String(result.success).toLowerCase()!=='true'){
+      throw new Error(result&&result.message||'FormSubmit did not confirm delivery');
+    }
+    root.querySelector('#rr-dialog').close();
+    const formStatus=root.querySelector('#rr-form-status');
+    formStatus.className='rr-status rr-success';
+    formStatus.textContent=L('Forespørselen er sendt! Vi kontakter deg så snart vi kan.','Your enquiry has been sent! We will contact you as soon as possible.');
   }catch(err){
     status.className='rr-status rr-error';
-    status.textContent=L('Forespørselen kunne ikke sendes. Prøv igjen eller skriv til post@ramstadreklame.no.','The enquiry could not be submitted. Please retry or email post@ramstadreklame.no.');
+    status.textContent=L('Forespørselen ble ikke bekreftet sendt. Prøv igjen, eller skriv til post@ramstadreklame.no.','Your enquiry could not be confirmed as sent. Please retry or email post@ramstadreklame.no.');
+  }finally{
     button.disabled=false;edit.disabled=false;
   }
 });
