@@ -75,7 +75,7 @@ function create(){
  '<p class="rr-intro">'+L('Velg tjenesten du trenger, legg til valgfrie tillegg og send oss en forespørsel. Vi avtaler endelig pris og leveranse skriftlig før du får en personlig og sikker betalingslenke via Stripe. Du betaler ikke på denne siden.','Choose your service, add any extras and send us an enquiry. We agree on the final price and delivery in writing before sending you a personal secure Stripe payment link. You do not pay on this site.')+'</p>'+
  '<div class="rr-payment-flow" aria-label="'+L('Slik fungerer bestilling og betaling','How enquiries and payments work')+'"><div><b>1</b><span>'+L('Send forespørsel','Send enquiry')+'</span></div><div><b>2</b><span>'+L('Avtal pris og omfang','Agree price and scope')+'</span></div><div><b>3</b><span>'+L('Motta Stripe-lenke','Receive Stripe link')+'</span></div><div><b>4</b><span>'+L('Betal sikkert','Pay securely')+'</span></div></div>'+ 
  '<div class="rr-grid"><form id="rr-form" class="rr-panel"><h3>'+L('Din bestilling – uten betalingsplikt','Your enquiry – no payment obligation')+'</h3><div class="rr-fields">'+categories+
- '<label class="rr-field rr-wide"><span>'+L('Tjeneste / pakke','Service / package')+'</span><select id="rr-product" required><option value="">'+L('Velg tjeneste','Choose a service')+'</option>'+products+'</select></label>'+
+ '<label class="rr-field rr-wide"><span>'+L('Tjeneste / pakke','Service / package')+'</span><select id="rr-product" name="service" required><option value="">'+L('Velg tjeneste','Choose a service')+'</option>'+products+'</select></label>'+
  '<label class="rr-field"><span>'+L('Navn','Name')+'</span><input id="rr-name" name="name" maxlength="120" autocomplete="name" required value="'+escaped(saved.name)+'" placeholder="'+L('Ditt navn','Your name')+'"></label>'+
  '<label class="rr-field"><span>'+L('Bedrift (valgfritt)','Company (optional)')+'</span><input id="rr-company" name="company" maxlength="120" autocomplete="organization" value="'+escaped(saved.company)+'" placeholder="'+L('Bedriftsnavn','Company name')+'"></label>'+
  '<label class="rr-field rr-wide"><span>'+L('E-postadresse','Email address')+'</span><input id="rr-email" name="email" type="email" required maxlength="200" autocomplete="email" value="'+escaped(saved.email)+'" placeholder="navn@bedrift.no"></label>'+
@@ -108,33 +108,37 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
   status.className='rr-status';
   status.textContent=L('Sender forespørselen…','Sending your enquiry…');
   try{
-    // Native HTML form POST lets FormSubmit receive the order as standard form fields.
-    const submission=document.createElement('form');
-    submission.method='POST';
-    submission.action='https://formsubmit.co/post@ramstadreklame.no';
-    submission.acceptCharset='UTF-8';
-    submission.style.display='none';
+    // Use the same visible, named form fields as the working contact form.
+    // Avoid a separate form containing only hidden inputs.
+    capture();
+    const orderMessage=makeBody();
+    const messageField=form.querySelector('#rr-message');
+    if(!saved.name.trim()||!saved.email.trim()||!findProduct()||!form.reportValidity()){
+      throw new Error('Missing required order fields');
+    }
+    // Include selected service, extras, line prices, total and contact details
+    // in the existing real textarea with name="message".
+    messageField.value=orderMessage;
+    form.method='POST';
+    form.action='https://formsubmit.co/post@ramstadreklame.no';
+    form.acceptCharset='UTF-8';
     const fields={
       _subject:'Ramstad Reklame – '+L('Forespørsel','Enquiry')+' – '+findProduct()[lang()],
       _replyto:saved.email.trim(),
-      _template:'basic',
-      name:saved.name.trim(),
-      company:saved.company.trim()||'–',
-      email:saved.email.trim(),
-      category:catalog[chosenCategory][lang()],
-      service:findProduct()[lang()],
-      message:makeBody()
+      _template:'basic'
     };
     Object.entries(fields).forEach(([key,value])=>{
-      const input=document.createElement('input');
-      input.type='hidden';
-      input.name=key;
+      let input=form.querySelector('input[name="'+key+'"]');
+      if(!input){
+        input=document.createElement('input');
+        input.type='hidden';
+        input.name=key;
+        form.appendChild(input);
+      }
       input.value=String(value);
-      submission.appendChild(input);
     });
-    document.body.appendChild(submission);
-    // The browser navigates to FormSubmit's own confirmation/CAPTCHA page.
-    submission.submit();
+    // Native submit bypasses the 'review' event handler intentionally.
+    form.submit();
   }catch(err){
     status.className='rr-status rr-error';
     status.textContent=L('Forespørselen kunne ikke sendes. Prøv igjen eller skriv til post@ramstadreklame.no.','The enquiry could not be submitted. Please retry or email post@ramstadreklame.no.');
