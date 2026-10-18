@@ -73,6 +73,7 @@ function create(){
  root.innerHTML='<div class="rr-wrap"><span class="rr-badge">'+L('VELG · TILPASS · SEND','CHOOSE · CUSTOMIZE · ENQUIRE')+'</span>'+
  '<h2 class="rr-title" id="rr-title">'+L('Sett sammen din forespørsel','Build your enquiry')+'</h2>'+
  '<p class="rr-intro">'+L('Velg tjenesten du trenger, legg til valgfrie tillegg og send oss en forespørsel. Vi avtaler endelig pris og leveranse skriftlig før du får en personlig og sikker betalingslenke via Stripe. Du betaler ikke på denne siden.','Choose your service, add any extras and send us an enquiry. We agree on the final price and delivery in writing before sending you a personal secure Stripe payment link. You do not pay on this site.')+'</p>'+
+ '<p class="rr-tax-note">'+L('Alle priser er oppgitt i NOK ekskl. eventuell merverdiavgift (MVA). MVA legges kun til når virksomheten er registrert i Merverdiavgiftsregisteret og avgiften skal beregnes.','All prices are shown in NOK excluding any applicable VAT. VAT is added only when the business is registered for VAT and the tax is legally due.')+'</p>'+ 
  '<div class="rr-payment-flow" aria-label="'+L('Slik fungerer bestilling og betaling','How enquiries and payments work')+'"><div><b>1</b><span>'+L('Send forespørsel','Send enquiry')+'</span></div><div><b>2</b><span>'+L('Avtal pris og omfang','Agree price and scope')+'</span></div><div><b>3</b><span>'+L('Motta Stripe-lenke','Receive Stripe link')+'</span></div><div><b>4</b><span>'+L('Betal sikkert','Pay securely')+'</span></div></div>'+ 
  '<div class="rr-grid"><form id="rr-form" class="rr-panel"><h3>'+L('Din bestilling – uten betalingsplikt','Your enquiry – no payment obligation')+'</h3><div class="rr-fields">'+categories+
  '<label class="rr-field rr-wide"><span>'+L('Tjeneste / pakke','Service / package')+'</span><select id="rr-product" name="service" required><option value="">'+L('Velg tjeneste','Choose a service')+'</option>'+products+'</select></label>'+
@@ -155,7 +156,7 @@ function summary(){
  const s=lines();const el=root.querySelector('#rr-summary-lines');
  el.innerHTML=s.data.length?s.data.map(x=>'<div class="rr-summary-line"><span>'+escaped(x.label)+'</span><strong>'+(x.quote?L('Etter avtale','By quotation'):(x.from?L('Fra ','From '):'')+money(x.price))+'</strong></div>').join(''):'<p style="color:#b9d6ec">'+L('Velg en tjeneste for å se prisen.','Choose a service to view the price.')+'</p>';
  root.querySelector('#rr-total').textContent=s.prod?(s.prod.quote?L('Avklares i tilbud','To be quoted'):(s.variable?L('Fra ','From '):'')+money(s.cost)):'–';
- root.querySelector('#rr-summary-terms').textContent=L('Veiledende priser i NOK. MVA tilkommer bare når virksomheten er MVA-registrert og avgiften er pålagt. Trykk, annonsebudsjett, domene og hosting er ikke inkludert med mindre annet er avtalt. Endelig omfang og sum bekreftes skriftlig.','Indicative NOK prices. VAT applies only when the business is VAT registered and the tax is due. Printing, ad spend, domain and hosting are excluded unless agreed otherwise. Final scope and total are confirmed in writing.')+(s.variable?L(' Valgt tjeneste krever særskilt avtale.',' Selected service requires a separate agreement.'):'');
+ root.querySelector('#rr-summary-terms').textContent=L('Alle priser er oppgitt i NOK ekskl. eventuell merverdiavgift (MVA). MVA legges kun til når virksomheten er registrert i Merverdiavgiftsregisteret og avgiften skal beregnes. Trykk, annonsebudsjett, domene og hosting er ikke inkludert med mindre annet er avtalt. Endelig omfang og sum bekreftes skriftlig.','All prices are shown in NOK excluding any applicable VAT. VAT is added only when the business is registered for VAT and the tax is legally due. Printing, ad spend, domain and hosting are excluded unless agreed otherwise. Final scope and total are confirmed in writing.')+(s.variable?L(' Valgt tjeneste krever særskilt avtale.',' Selected service requires a separate agreement.'):'');
 }
 function makeBody(){
  const s=lines();const fmt=x=>x.quote?L('Pris etter avtale','Price by quotation'):(x.from?L('Fra ','From '):'')+money(x.price);
@@ -164,7 +165,7 @@ function makeBody(){
   L('Valgte tjenester','Selected services')+':',
   ...s.data.map(x=>'- '+x.label+': '+fmt(x)),
   L('Veiledende sum','Indicative total')+': '+(s.prod?(s.prod.quote?L('Pris etter avtale','Price by quotation'):(s.variable?L('Fra ','From '):'')+money(s.cost)):'–'),
-  L('MVA: legges til hvis aktuelt. Endelig pris avtales skriftlig.','VAT: added if applicable. Final price confirmed in writing.'),
+  L('Alle priser er oppgitt i NOK ekskl. eventuell merverdiavgift (MVA). MVA legges kun til når virksomheten er registrert i Merverdiavgiftsregisteret og avgiften skal beregnes. Endelig pris avtales skriftlig.','All prices are shown in NOK excluding any applicable VAT. VAT is added only when the business is registered for VAT and the tax is legally due. Final price is confirmed in writing.'),
   '',L('Navn','Name')+': '+saved.name,L('Bedrift','Company')+': '+saved.company,L('E-post','Email')+': '+saved.email,
   '',L('Prosjektbeskrivelse','Project details')+':',saved.message].join('\n');
 }
