@@ -42,13 +42,23 @@ footer{border-top:1px solid var(--border);color:#62758b;font-size:12px;padding:2
 @media (max-width:520px){.wrap{width:calc(100% - 28px)}nav{height:64px;gap:8px}.logo-shell{width:41px;height:41px;flex-basis:41px}.brand-name{font-size:12px;letter-spacing:0}.brand-sub{display:none}.back span{display:none}.back{padding:8px}.lang button{min-width:33px;padding:6px 7px;font-size:10px}.hero-grid{padding:51px 0 57px;gap:36px}.eyebrow{font-size:10px;letter-spacing:.12em}.hero-actions{gap:10px;margin-top:26px}.btn{padding:13px 15px;min-height:48px;font-size:12px;flex:1 1 auto}.hero-bottom{margin-top:24px}.hero-frame{height:275px;border-radius:22px}.hero-art{margin:0 10px 0 4px}.hero-art:before{border-radius:20px}.hero-frame-bottom{bottom:18px;left:19px;font-size:11px}.floating-note{padding:9px 12px;border-radius:12px;left:-7px;bottom:14px}.floating-note strong{font-size:10px}.pulse-mark{width:27px;height:27px}.hero-bottom{font-size:11px}.service-grid,.gallery-grid,.process-grid{grid-template-columns:1fr}.service-card{padding:24px}.service-card h3{margin-top:19px}.service-grid{gap:12px}.gallery-card{height:265px}.process-card{padding:20px}.process-card:after{display:none}.contact-panel{padding:31px 23px;border-radius:23px}.contact-panel h2{font-size:31px}.contact-actions .btn{width:100%}.footer-row{display:grid;gap:10px}}
 @media (max-width:355px){.brand-name{font-size:10px}.brand{gap:5px}.logo-shell{width:34px;height:34px;flex-basis:34px}.hero-actions{display:grid}.pillar{font-size:10px}.wrap{width:calc(100% - 22px)}}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}.floating-note,.pulse-mark:after{animation:none!important}.service-card,.btn,.gallery-card img,.hero-frame img,.back{transition:none!important}}
+
+/* Clearly visible back-to-home button on all screen widths. */
+.back{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:9px 14px;border:1px solid rgba(139,215,255,.46);border-radius:12px;background:#0c69d4;color:#fff;font-size:12px;font-weight:850;white-space:nowrap;line-height:1.2;box-shadow:0 7px 20px rgba(0,54,150,.25);transition:background .15s,transform .15s}
+.back:hover{background:#087cff;color:#fff;transform:translateY(-1px)}
+.back:focus-visible{outline:3px solid #83deff;outline-offset:3px}
+.back svg{flex:0 0 16px;width:16px;height:16px;display:block}
+.back .back-full{display:inline}
+.back .back-short{display:none}
+@media(max-width:600px){.back{min-height:42px;padding:9px 10px;font-size:12px;gap:5px}.back .back-full{display:none!important}.back .back-short{display:inline!important}}
+@media(max-width:360px){.back{padding:8px;font-size:11px;min-height:40px}}
 </style><link rel="stylesheet" href="rr-order.css">
 <link rel="icon" href="ramstad-logo-official.png" type="image/png">
 </head>
 <body><div class="progress" aria-hidden="true"></div><a class="skip-link" href="#main">Hopp til innhold</a>
 <header><div class="wrap"><nav aria-label="Hovednavigasjon">
 <a class="brand" href="index.html" aria-label="Ramstad Reklame – Forsiden"><span class="logo-shell"><img src="ramstad-logo-official.png" alt="Ramstad Reklame logo" width="52" height="52"></span><span class="brand-copy"><span class="brand-name">RAMSTAD <em>REKLAME</em></span><span class="brand-sub">NETTSIDER · DESIGN · ANNONSERING · INNHOLD</span></span></a>
-<div class="nav-right"><a class="back" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg><span data-no="Til forsiden" data-en="Back home">Til forsiden</span></a><div class="lang" aria-label="Language"><button type="button" id="noBtn" class="active" aria-pressed="true">NO</button><button type="button" id="enBtn" aria-pressed="false">EN</button></div></div>
+<div class="nav-right"><a class="back" href="/" aria-label="Tilbake til forsiden" title="Tilbake til forsiden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg><span class="back-full" data-no="Tilbake til forsiden" data-en="Back to home">Tilbake til forsiden</span><span class="back-short" data-no="Tilbake" data-en="Back">Tilbake</span></a><div class="lang" aria-label="Language"><button type="button" id="noBtn" class="active" aria-pressed="true">NO</button><button type="button" id="enBtn" aria-pressed="false">EN</button></div></div>
 </nav></div></header>
 <main id="main">
 <section class="hero"><div class="wrap hero-grid"><div class="hero-content">
