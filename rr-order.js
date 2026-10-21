@@ -103,8 +103,11 @@ function renderVisiblePrices(){
  }).join('');
  section.innerHTML='<div class="rr-price-wrap"><h2>'+L('Priser på våre tjenester','Our service prices')+'</h2><p>'+L('Velg en tjeneste for å se prisen og gå direkte til forespørselen. Alle priser er veiledende i NOK. Annonsebudsjett, trykk og eksterne kostnader kommer i tillegg ved behov. MVA legges til når det er aktuelt.','Choose a service to see its price and go straight to the enquiry. Indicative prices in NOK. Ad spend, printing and external costs are additional where needed. VAT applies when required.')+'</p>'+parts+'</div>';
  if(catKey!=='hjem'){
-   const hero=document.querySelector('.hero-actions');
-   if(hero&&!hero.querySelector('a[href="#rr-visible-prices"]'))hero.insertAdjacentHTML('beforeend','<a class="btn btn-outline rr-prices-hero" href="#rr-visible-prices">'+L('Se priser','See prices')+' ↘</a>');
+   const hero=document.querySelector('.hero-actions, .hero .actions, .hero .cta');
+   if(hero&&!hero.querySelector('a[href="#rr-visible-prices"]')){
+     const style=hero.classList.contains('cta')?'btn secondary':hero.classList.contains('actions')?'btn alt':'btn btn-outline';
+     hero.insertAdjacentHTML('beforeend','<a class="'+style+' rr-prices-hero" href="#rr-visible-prices">'+L('Se priser','See prices')+' ↘</a>');
+   }
  }
 }
 
@@ -137,7 +140,6 @@ form.addEventListener('input',()=>{capture();summary()});
 form.addEventListener('change',e=>{
  if(e.target.id==='rr-category'){capture();chosenCategory=e.target.value;saved.product='';create();return}
  capture();summary();
- renderVisiblePrices();
 });
 form.addEventListener('submit',e=>{e.preventDefault();capture();if(!form.reportValidity())return;if(!findProduct())return;
  const d=root.querySelector('#rr-dialog');root.querySelector('#rr-review-text').textContent=makeBody();d.showModal();
@@ -188,6 +190,7 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
   }
 });
 summary();
+renderVisiblePrices();
 }
 function lines(){
  const prod=findProduct();let data=[];let cost=0;
