@@ -52,12 +52,22 @@ section.info{padding:68px 0}.info h2{font-size:clamp(29px,4vw,43px);line-height:
 .hero{padding:47px 0}.hero h1{font-size:clamp(34px,9vw,44px)}.lead{font-size:15px}.actions .btn{width:100%}
 section.info{padding:43px 0}.card{padding:20px}.card h3{font-size:16px}.rr-payment-flow{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Clearly visible back-to-home button on all screen widths. */
+.back{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:9px 14px;border:1px solid rgba(139,215,255,.46);border-radius:12px;background:#0c69d4;color:#fff;font-size:12px;font-weight:850;white-space:nowrap;line-height:1.2;box-shadow:0 7px 20px rgba(0,54,150,.25);transition:background .15s,transform .15s}
+.back:hover{background:#087cff;color:#fff;transform:translateY(-1px)}
+.back:focus-visible{outline:3px solid #83deff;outline-offset:3px}
+.back svg{flex:0 0 16px;width:16px;height:16px;display:block}
+.back .back-full{display:inline}
+.back .back-short{display:none}
+@media(max-width:600px){.back{min-height:42px;padding:9px 10px;font-size:12px;gap:5px}.back .back-full{display:none!important}.back .back-short{display:inline!important}}
+@media(max-width:360px){.back{padding:8px;font-size:11px;min-height:40px}}
 </style>
 </head>
 <body>
 <header><div class="wrap top">
 <a class="brand" href="/"><img src="ramstad-logo-official.png" alt="Ramstad Reklame logo">RAMSTAD <em>REKLAME</em></a>
-<div class="nav"><a href="/" class="back" data-no="← Forsiden" data-en="← Home">← Forsiden</a>
+<div class="nav"><a href="/" class="back" aria-label="Tilbake til forsiden" title="Tilbake til forsiden"><span aria-hidden="true">←</span><span class="back-full" data-no="Tilbake til forsiden" data-en="Back to home">Tilbake til forsiden</span><span class="back-short" data-no="Tilbake" data-en="Back">Tilbake</span></a>
 <div class="lang"><button type="button" id="noBtn" class="active">NO</button><button type="button" id="enBtn">EN</button></div></div>
 </div></header>
 <main>
