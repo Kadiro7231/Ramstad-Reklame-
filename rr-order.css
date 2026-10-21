@@ -63,3 +63,30 @@
 .rr-success{padding:13px 15px;border:1px solid #84d3a4;border-radius:12px;background:#ebfff1;color:#165d32}
 .rr-error{padding:13px 15px;border:1px solid #e2a7a7;border-radius:12px;background:#fff4f4;color:#922b2b}
 .rr-action:disabled,.rr-secondary:disabled{opacity:.6;cursor:wait;filter:none}
+
+/* Short, progressive enquiry path. All existing desktop pricing and payment rules remain. */
+.rr-extras>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;border:1px solid #c9dcef;border-radius:12px;background:#f4f9ff;color:#123f70;font-weight:800;font-size:14px}
+.rr-extras>summary::-webkit-details-marker{display:none}
+.rr-extras>summary::after{content:'+';font-size:23px;color:#087cff;line-height:1}
+.rr-extras[open]>summary::after{content:'−'}
+.rr-extras>p{margin:12px 0 13px;color:#56738f;font-size:13px}
+.rr-mobile-check,.rr-mobile-terms,.rr-mobile-submit{display:none}
+@media(max-width:850px){
+  .rr-root{padding:34px 0 42px}
+  .rr-title{margin:11px 0 9px}
+  .rr-intro{font-size:14px;line-height:1.55;margin:0 0 17px}
+  .rr-payment-flow{display:none}
+  .rr-grid{display:block}
+  .rr-panel{padding:19px 16px}
+  .rr-panel h3{font-size:17px;margin:0 0 13px}
+  .rr-fields{gap:11px}
+  .rr-field textarea{min-height:75px}
+  .rr-extras{margin-top:17px;padding-top:13px}
+  .rr-summary{display:none}
+  .rr-mobile-check{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:18px;padding:12px 13px;border-radius:12px;background:#ecf6ff;color:#0f3d6f;font-size:13px;font-weight:750}
+  .rr-mobile-check strong{font-size:19px;color:#075bac}
+  .rr-mobile-terms{display:block;color:#55718a;font-size:12px;line-height:1.5;margin:10px 0 0}
+  .rr-mobile-submit{display:block;margin:16px 0 0}
+  .rr-privacy-note{margin-top:10px}
+  .rr-dialog-actions{flex-direction:column}
+}
