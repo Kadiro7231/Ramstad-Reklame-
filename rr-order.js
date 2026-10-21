@@ -28,6 +28,11 @@ const catalog={
     {id:'promonthly',no:'Synlighet Pro – per måned',en:'Visibility Pro – monthly',price:12990,monthly:true},
     {id:'adsquote',no:'Spesialkampanje – pris etter avtale',en:'Custom campaign – by quotation',quote:true}
   ]},
+  synlighet:{no:'Google og AI-søk',en:'Google and AI search',items:[
+    {id:'googleai',no:'Synlighet på Google og i AI-søk – pris etter avtale',en:'Visibility on Google and in AI search – by quotation',quote:true},
+    {id:'googleprofile',no:'Google bedriftsprofil – oppsett og optimalisering',en:'Google Business Profile setup and optimization',price:2490},
+    {id:'local-seo',no:'Lokal SEO og søkevennlig innhold – pris etter avtale',en:'Local SEO and search-friendly content – by quotation',quote:true}
+  ]},
   innhold:{no:'Bilder og innhold',en:'Photos and content',items:[
     {id:'photo5',no:'Produktfotografering – 5 produkter',en:'Product photography – 5 products',price:3900},
     {id:'photo10',no:'Produktfotografering – 10 produkter',en:'Product photography – 10 products',price:6900},
@@ -49,7 +54,7 @@ const extras=[
 const root=document.getElementById('rr-offers');
 if(!root)return;
 const catKey=root.dataset.category||'hjem';
-const catOrder=['nettsider','design','annonsering','innhold','pakker'];
+const catOrder=['nettsider','design','annonsering','synlighet','innhold','pakker'];
 let chosenCategory=catKey==='hjem'?'nettsider':catKey;
 let saved={product:'',extras:[],name:'',company:'',email:'',message:''};
 const lang=()=>document.documentElement.lang==='en'?'en':'no';
@@ -69,7 +74,7 @@ function create(){
  const selected=catalog[chosenCategory];
  const categories=catKey==='hjem'?'<label class="rr-field rr-wide"><span>'+L('Velg tjenesteområde','Choose service category')+'</span><select id="rr-category" name="category">'+catOrder.map(k=>option(k,catalog[k][lang()],k===chosenCategory)).join('')+'</select></label>':'';
  const products=selected.items.map(p=>option(p.id,p[lang()]+(p.price?' · '+money(p.price)+(p.monthly?L(' / mnd',' / mo'):''):'')+(p.quote?'':p.from?L(' (fra-pris)',' (starting price)'):''),saved.product===p.id)).join('');
- const extraHtml=extras.map(e=>'<label class="rr-extra"><input name="rr-extra" type="checkbox" value="'+e.id+'"'+(saved.extras.includes(e.id)?' checked':'')+'><span><strong>'+escaped(e[lang()])+'</strong><small>+ '+money(e.price)+'</small></span></label>').join('');
+ const extraHtml=extras.filter(e=>!(chosenCategory==='synlighet'&&e.id==='google')).map(e=>'<label class="rr-extra"><input name="rr-extra" type="checkbox" value="'+e.id+'"'+(saved.extras.includes(e.id)?' checked':'')+'><span><strong>'+escaped(e[lang()])+'</strong><small>+ '+money(e.price)+'</small></span></label>').join('');
  root.innerHTML='<div class="rr-wrap"><span class="rr-badge">'+L('VELG · TILPASS · SEND','CHOOSE · CUSTOMIZE · ENQUIRE')+'</span>'+
  '<h2 class="rr-title" id="rr-title">'+L('Velg tjeneste og se pris','Choose a service and see a price')+'</h2>'+
  '<p class="rr-intro">'+L('Velg en tjeneste og se veiledende pris. Send en uforpliktende forespørsel – ingen betaling på denne siden. Endelig pris avtales skriftlig.','Choose a service and see an indicative price. Send a no-obligation enquiry – no payment is made on this page. We agree the final price in writing.')+'</p>'+
