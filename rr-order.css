@@ -63,3 +63,23 @@
 .rr-success{padding:13px 15px;border:1px solid #84d3a4;border-radius:12px;background:#ebfff1;color:#165d32}
 .rr-error{padding:13px 15px;border:1px solid #e2a7a7;border-radius:12px;background:#fff4f4;color:#922b2b}
 .rr-action:disabled,.rr-secondary:disabled{opacity:.6;cursor:wait;filter:none}
+
+/* Keep optional extras collapsed until requested, without losing selections. */
+.rr-extras summary{cursor:pointer;font-size:17px;line-height:1.5;font-weight:800;color:#072e59;margin-bottom:12px}
+.rr-extras summary:focus-visible{outline:3px solid #51ccff;outline-offset:3px}
+.rr-extras:not([open]){padding-bottom:0}
+.rr-extras>p{margin:0 0 14px}
+@media(max-width:600px){
+  .rr-root{padding:42px 0}
+  .rr-payment-flow{display:none}
+  .rr-intro{font-size:14px;line-height:1.55;margin-bottom:20px}
+  .rr-grid{gap:14px}
+  .rr-panel,.rr-summary{padding:19px 16px;border-radius:17px}
+  .rr-panel h3,.rr-summary h3{font-size:18px;margin-bottom:15px}
+  .rr-fields{gap:11px}
+  .rr-field input,.rr-field select,.rr-field textarea{font-size:16px}
+  .rr-field textarea{min-height:84px}
+  .rr-extras{margin-top:17px;padding-top:15px}
+  .rr-summary-total{margin-top:14px}
+  .rr-action{margin-top:15px}
+}
