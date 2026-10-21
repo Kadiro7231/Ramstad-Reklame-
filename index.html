@@ -263,6 +263,31 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
  .compact-contact .contact-item{padding:10px 12px}
  .compact-contact .cta .btn{width:100%;justify-content:center}
 }
+
+/* Three distinct customer goals; all four detailed service pages remain accessible. */
+.services-focused{grid-template-columns:repeat(3,minmax(0,1fr))}
+.services-focused .service{min-width:0}
+.services-focused .service-goal{display:block;margin-bottom:8px;font-weight:900;font-size:12px;color:#076bc3}
+.services-focused .service-media{height:170px}
+.services-focused .service-combined .service-body{display:block}
+.services-focused .service-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.services-focused .service-links a{display:inline-flex;align-items:center;min-height:38px;padding:8px 11px;border:1px solid #cfe4fa;border-radius:10px;background:#f0f7ff;color:#064f9d;font-size:12px;font-weight:800}
+.services-focused .service-links a:hover{background:#ddebff}
+.services-focused .service-links a:focus-visible{outline:3px solid #087cff;outline-offset:2px}
+.services-after{margin:17px 0 0;color:#56718a;font-size:13px}
+@media(max-width:960px){.services-focused{grid-template-columns:repeat(2,minmax(0,1fr))}.services-focused .service-combined{grid-column:1/-1}}
+@media(max-width:600px){
+ .services-focused{grid-template-columns:1fr}
+ .services-focused .service-combined{grid-column:auto}
+ .services-focused .service-media{height:100%;min-height:125px}
+ .services-focused .service-goal{font-size:11px;margin-bottom:5px}
+ .services-focused .service h3{font-size:15px}
+ .services-focused .service-combined .service-body{display:block}
+ .services-focused .service-links{gap:6px;margin-top:10px}
+ .services-focused .service-links a{min-height:36px;padding:7px 8px;font-size:11px}
+ .services-after{font-size:12px}
+}
+@media(max-width:380px){.services-focused .service-combined{grid-template-columns:1fr}.services-focused .service-combined .service-media{height:120px;min-height:0}.services-focused .service-combined .service-body{padding:12px 9px}}
 </style>
 <link rel="stylesheet" href="rr-order.css">
 <link rel="icon" href="ramstad-logo-official.png" type="image/png">
@@ -329,15 +354,47 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
 <section id="services">
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="kicker" data-no="Våre tjenester" data-en="Our services">Våre tjenester</div><h2 data-no="Løsninger på det bedriften din trenger mest." data-en="Solutions for what your business needs most.">Løsninger på det bedriften din trenger mest.</h2></div>
-      <p data-no="Kjenner du deg igjen? Velg utfordringen din, så viser vi hvordan vi kan hjelpe." data-en="Recognize a challenge? Choose what you need help with to explore solutions.">Kjenner du deg igjen? Velg utfordringen din, så viser vi hvordan vi kan hjelpe.</p>
+      <div>
+        <div class="kicker" data-no="Våre tjenester" data-en="Our services">Våre tjenester</div>
+        <h2 data-no="Hva ønsker du å oppnå?" data-en="What do you want to achieve?">Hva ønsker du å oppnå?</h2>
+      </div>
+      <p data-no="Velg målet ditt. Vi hjelper med å finne den riktige tjenesten – enkelt og oversiktlig." data-en="Choose your goal. We'll help you find the right service – clearly and simply.">Velg målet ditt. Vi hjelper med å finne den riktige tjenesten – enkelt og oversiktlig.</p>
     </div>
-    <div class="services">
-      <a class="service reveal" href="nettsider.html"><div class="service-media"><img src="websites-workspace.png" alt="Nettsider"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Nettsider" data-en="Websites">Nettsider</h3><p data-no="Får du for få henvendelser? Vi lager mobilvennlige nettsider som gjør det enklere å ta kontakt." data-en="Not getting enough enquiries? We create mobile-friendly websites that make it easier to get in touch.">Får du for få henvendelser? Vi lager mobilvennlige nettsider som gjør det enklere å ta kontakt.</p></div><span class="go">→</span></div></div></a>
-      <a class="service reveal" href="grafisk-design.html"><div class="service-media"><img src="design-branding.png" alt="Grafisk design"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Grafisk design" data-en="Graphic design">Grafisk design</h3><p data-no="Blir bedriften din glemt? Vi utvikler design som gjør merkevaren tydelig og gjenkjennelig." data-en="Is your business being forgotten? We create memorable and recognizable branding.">Blir bedriften din glemt? Vi utvikler design som gjør merkevaren tydelig og gjenkjennelig.</p></div><span class="go">→</span></div></div></a>
-      <a class="service reveal" href="annonsering.html"><div class="service-media"><img src="advertising-strategy.png" alt="Annonsering"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Annonsering" data-en="Advertising">Annonsering</h3><p data-no="Trenger du flere visninger? Vi utvikler målrettede kampanjer for å nå riktig publikum." data-en="Need more views? We develop targeted campaigns to reach the right audience.">Trenger du flere visninger? Vi utvikler målrettede kampanjer for å nå riktig publikum.</p></div><span class="go">→</span></div></div></a>
-      <a class="service reveal" href="bilder-innhold.html"><div class="service-media"><img src="content-shoot.png" alt="Bilder og innhold"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Bilder & innhold" data-en="Images & content">Bilder & innhold</h3><p data-no="Stopper ikke folk opp? Vi lager bilder og video som fanger oppmerksomheten." data-en="Is your content being overlooked? We create photo and video content that captures attention.">Stopper ikke folk opp? Vi lager bilder og video som fanger oppmerksomheten.</p></div><span class="go">→</span></div></div></a>
+    <div class="services services-focused">
+      <a class="service reveal" href="annonsering.html">
+        <div class="service-media"><img loading="lazy" src="advertising-strategy.png" alt="Annonsering og synlighet"></div>
+        <div class="service-body">
+          <div class="service-top"><div>
+            <span class="service-goal" data-no="Nå flere mennesker" data-en="Reach more people">Nå flere mennesker</span>
+            <h3 data-no="Annonsering og markedsføring" data-en="Advertising and marketing">Annonsering og markedsføring</h3>
+            <p data-no="Får du for få visninger? Vi planlegger kampanjer og hjelper bedriften din å nå riktig publikum." data-en="Not enough views? We plan campaigns and help your business reach the right audience.">Får du for få visninger? Vi planlegger kampanjer og hjelper bedriften din å nå riktig publikum.</p>
+          </div><span class="go" aria-hidden="true">→</span></div>
+        </div>
+      </a>
+      <a class="service reveal" href="nettsider.html">
+        <div class="service-media"><img loading="lazy" src="websites-workspace.png" alt="Nettsider for bedrifter"></div>
+        <div class="service-body">
+          <div class="service-top"><div>
+            <span class="service-goal" data-no="Gjør besøk til henvendelser" data-en="Turn visits into enquiries">Gjør besøk til henvendelser</span>
+            <h3 data-no="Nettsider" data-en="Websites">Nettsider</h3>
+            <p data-no="Får du for få henvendelser? Vi lager mobilvennlige nettsider som gjør det enkelt å forstå tilbudet og ta kontakt." data-en="Not enough enquiries? We create mobile-friendly websites that make your offer clear and contacting you easy.">Får du for få henvendelser? Vi lager mobilvennlige nettsider som gjør det enkelt å forstå tilbudet og ta kontakt.</p>
+          </div><span class="go" aria-hidden="true">→</span></div>
+        </div>
+      </a>
+      <article class="service service-combined reveal">
+        <div class="service-media"><img loading="lazy" src="design-branding.png" alt="Design og visuelt innhold"></div>
+        <div class="service-body">
+          <span class="service-goal" data-no="Bli lagt merke til og husket" data-en="Get noticed and remembered">Bli lagt merke til og husket</span>
+          <h3 data-no="Design, foto og video" data-en="Design, photo and video">Design, foto og video</h3>
+          <p data-no="Trenger bedriften et tydelig uttrykk? Vi lager grafisk design, produktbilder og video som viser frem merkevaren din." data-en="Need a clear brand identity? We create graphic design, product photography and video to showcase your brand.">Trenger bedriften et tydelig uttrykk? Vi lager grafisk design, produktbilder og video som viser frem merkevaren din.</p>
+          <div class="service-links">
+            <a href="grafisk-design.html" data-no="Se grafisk design →" data-en="Explore graphic design →">Se grafisk design →</a>
+            <a href="bilder-innhold.html" data-no="Se foto og video →" data-en="Explore photo and video →">Se foto og video →</a>
+          </div>
+        </div>
+      </article>
     </div>
+    <p class="services-after" data-no="Vil du sammenligne priser? Velg tjenesten du trenger i prisberegneren nedenfor." data-en="Want to compare prices? Select the service you need in the quote calculator below.">Vil du sammenligne priser? Velg tjenesten du trenger i prisberegneren nedenfor.</p>
   </div>
 </section>
 
