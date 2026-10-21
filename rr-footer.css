@@ -1,0 +1,9 @@
+/* Shared social and copyright footer for Ramstad Reklame. */
+footer .rr-footer-copyright{color:#1b93ff!important;font-weight:850!important}
+footer .rr-social-links{display:flex;justify-content:center;align-items:center;gap:11px;flex-wrap:wrap;margin:18px auto 0;padding:0 14px;width:100%;clear:both}
+footer .rr-social-links a{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;min-width:136px;border:1px solid #8dcfff;background:#edf7ff;color:#0959a7;border-radius:13px;padding:10px 15px;text-decoration:none!important;line-height:1.2;font-size:13px;font-weight:850;box-shadow:0 6px 16px #052c5018;transition:transform .18s,background-color .18s}
+footer .rr-social-links a:hover{background:#dceeff;color:#064985;transform:translateY(-2px)}
+footer .rr-social-links a:focus-visible{outline:3px solid #39adff;outline-offset:3px}
+footer .rr-social-links svg{display:block;flex:0 0 21px;width:21px;height:21px}
+@media(max-width:600px){footer .rr-social-links{gap:9px;margin-top:14px}footer .rr-social-links a{min-width:0;padding:10px 14px;min-height:44px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){footer .rr-social-links a{transition:none}}
