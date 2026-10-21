@@ -302,8 +302,17 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
 @media(max-width:600px){.search-highlight{padding:21px 19px;gap:18px;margin-top:16px}.search-highlight h3{font-size:21px}.search-highlight p{font-size:13px}.search-actions{gap:10px}}
 .service-index-link{display:inline-block;color:#0668c0;font-size:13px;font-weight:850;text-decoration:underline;text-underline-offset:3px;margin-left:5px}
 @media(max-width:600px){.service-index-link{display:block;margin:7px 0 0}}
+
+/* Google and AI discovery is visible immediately, full feature precedes service cards. */
+.hero-search-entry{display:inline-flex;align-items:center;gap:9px;max-width:100%;margin-top:13px;padding:9px 12px;border-radius:11px;border:1px solid rgba(131,223,255,.60);background:rgba(6,83,158,.44);color:#f0fbff;font-size:13px;line-height:1.4;font-weight:850;text-decoration:none;transition:background .18s,border-color .18s}
+.hero-search-entry:hover{background:rgba(8,124,255,.65);border-color:#b4ebff}
+.hero-search-entry:focus-visible{outline:3px solid #9addff;outline-offset:3px}
+.hero-search-entry .hero-search-icon{color:#8fe7ff;font-size:17px}
+.search-feature-spotlight{padding:24px 0 0}
+.search-feature-spotlight .search-highlight{margin-top:0}
+@media(max-width:600px){.hero-search-entry{margin-top:12px;font-size:12px;padding:9px 11px}.search-feature-spotlight{padding-top:16px}}
 </style>
-<link rel="stylesheet" href="rr-order.css?v=20261022-simple">
+<link rel="stylesheet" href="rr-order.css?v=20261022-focus-extras">
 <link rel="icon" href="ramstad-logo-official.png" type="image/png">
 <link rel="stylesheet" href="rr-footer.css?v=20261022-footer-v1">
 </head>
@@ -338,6 +347,7 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow"><i></i><span data-no="BLI SETT. BLI HUSKET." data-en="BE SEEN. BE REMEMBERED.">BLI SETT. BLI HUSKET.</span></div>
+      <a class="hero-search-entry" href="synlighet.html"><span class="hero-search-icon" aria-hidden="true">✦</span><span data-no="Bli funnet på Google og i AI-søk" data-en="Get found on Google and in AI search">Bli funnet på Google og i AI-søk</span><span aria-hidden="true">↗</span></a>
       <h1 data-no-html='Får du for få <span class="accent">visninger og kunder?</span>' data-en-html='Not getting enough <span class="accent">views and customers?</span>'>Får du for få <span class="accent">visninger og kunder?</span></h1>
       <p class="hero-copy" data-no="Blir bedriften din oversett? Vi hjelper deg å nå riktig publikum med annonsering, nettsider og innhold – slik at flere kan oppdage bedriften din og ta kontakt." data-en="Is your business being overlooked? We help you reach the right audience through advertising, websites and content – so more people can discover your business and get in touch.">Blir bedriften din oversett? Vi hjelper deg å nå riktig publikum med annonsering, nettsider og innhold – slik at flere kan oppdage bedriften din og ta kontakt.</p>
       <div class="cta">
@@ -365,6 +375,22 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
     <span><b>✦</b> Nettsider</span><span><b>✦</b> Grafisk design</span><span><b>✦</b> Annonsering</span><span><b>✦</b> Bilder & innhold</span><span><b>✦</b> Digital synlighet</span>
   </div>
 </div>
+
+<section class="search-feature-spotlight">
+  <div class="wrap">
+    <aside class="search-highlight reveal" aria-labelledby="google-ai-title">
+      <div>
+        <span class="search-tag" data-no="Ny tjeneste · Digital synlighet" data-en="New service · Digital visibility">Ny tjeneste · Digital synlighet</span>
+        <h3 id="google-ai-title" data-no="BLI FUNNET PÅ GOOGLE OG I AI-SØK" data-en="GET FOUND ON GOOGLE AND IN AI SEARCH">BLI FUNNET PÅ GOOGLE OG I AI-SØK</h3>
+        <p data-no="Trenger du flere kunder som finner bedriften din? Vi hjelper deg med Google bedriftsprofil, lokal SEO og innhold som gjør deg lettere å oppdage i søk." data-en="Need more customers to find your business? We help with your Google Business Profile, local SEO and content that makes you easier to discover in search.">Trenger du flere kunder som finner bedriften din? Vi hjelper deg med Google bedriftsprofil, lokal SEO og innhold som gjør deg lettere å oppdage i søk.</p>
+      </div>
+      <div class="search-actions">
+        <a class="search-button" href="synlighet.html" data-no="Se hvordan vi hjelper →" data-en="See how we help →">Se hvordan vi hjelper →</a>
+        <a class="search-link" href="synlighet.html#rr-offers" data-no="Be om tilbud" data-en="Request a quote">Be om tilbud</a>
+      </div>
+    </aside>
+  </div>
+</section>
 
 <section id="services">
   <div class="wrap">
@@ -409,17 +435,7 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
         </div>
       </article>
     </div>
-    <aside class="search-highlight reveal" aria-labelledby="google-ai-title">
-      <div>
-        <span class="search-tag" data-no="Ny tjeneste · Digital synlighet" data-en="New service · Digital visibility">Ny tjeneste · Digital synlighet</span>
-        <h3 id="google-ai-title" data-no="BLI FUNNET PÅ GOOGLE OG I AI-SØK" data-en="GET FOUND ON GOOGLE AND IN AI SEARCH">BLI FUNNET PÅ GOOGLE OG I AI-SØK</h3>
-        <p data-no="Trenger du flere kunder som finner bedriften din? Vi hjelper deg med Google bedriftsprofil, lokal SEO og innhold som gjør deg lettere å oppdage i søk." data-en="Need more customers to find your business? We help with your Google Business Profile, local SEO and content that makes you easier to discover in search.">Trenger du flere kunder som finner bedriften din? Vi hjelper deg med Google bedriftsprofil, lokal SEO og innhold som gjør deg lettere å oppdage i søk.</p>
-      </div>
-      <div class="search-actions">
-        <a class="search-button" href="synlighet.html" data-no="Se hvordan vi hjelper →" data-en="See how we help →">Se hvordan vi hjelper →</a>
-        <a class="search-link" href="synlighet.html#rr-offers" data-no="Be om tilbud" data-en="Request a quote">Be om tilbud</a>
-      </div>
-    </aside>
+
     <p class="services-after"><span data-no="Vil du finne noe spesifikt? Søk blant alle tjenestene våre, eller få prisoverslag nedenfor." data-en="Looking for something specific? Search all our services or get an indicative price below.">Vil du finne noe spesifikt? Søk blant alle tjenestene våre, eller få prisoverslag nedenfor.</span> <a class="service-index-link" href="tjenester.html" data-no="Søk alle tjenester →" data-en="Search all services →">Søk alle tjenester →</a></p>
   </div>
 </section>
@@ -525,7 +541,7 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 </script>
 <script src="rr-forms-config.js?v=20261016" defer></script>
 <script src="rr-web3forms.js?v=20261016" defer></script>
-<script src="rr-order.js?v=20261022-simple" defer></script>
+<script src="rr-order.js?v=20261022-focus-extras" defer></script>
 <script src="rr-analytics.js" defer></script>
 </body>
 </html>
