@@ -239,6 +239,30 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
   .service-body{padding-left:9px}
   .service .go{display:none}
 }
+
+/* Unified trust/process section and compact contact area. */
+.merged-journey{background:#f3f8ff}
+.merged-journey .merged-steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+.merged-journey .step{background:#fff}
+.journey-note{max-width:900px;margin:19px 0 0;color:#48617e;font-size:13px;line-height:1.7}
+.anchor-alias{scroll-margin-top:88px}
+.compact-contact{padding-top:30px}
+.compact-contact .contact-panel{grid-template-columns:1fr .85fr;align-items:center}
+.compact-contact .contact-copy .cta{margin-top:22px}
+@media(max-width:960px){.compact-contact .contact-panel{grid-template-columns:1fr}}
+@media(max-width:600px){
+ .merged-journey .merged-steps{grid-template-columns:1fr;gap:10px}
+ .merged-journey .step{padding:15px 17px}
+ .merged-journey .step h3{margin:8px 0 4px;font-size:15px}
+ .merged-journey .step p{font-size:12px}
+ .journey-note{font-size:12px;margin-top:14px}
+ .compact-contact{padding:20px 0 42px}
+ .compact-contact .contact-panel{gap:18px;padding:22px}
+ .compact-contact .contact-panel h2{font-size:27px}
+ .compact-contact .contact-list{gap:7px}
+ .compact-contact .contact-item{padding:10px 12px}
+ .compact-contact .cta .btn{width:100%;justify-content:center}
+}
 </style>
 <link rel="stylesheet" href="rr-order.css">
 <link rel="icon" href="ramstad-logo-official.png" type="image/png">
@@ -257,8 +281,7 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
       <div class="nav-links">
         <a href="#services" data-no="Tjenester" data-en="Services">Tjenester</a>
         <a href="#rr-offers" data-no="Få tilbud" data-en="Get a quote">Få tilbud</a>
-        <a href="#why" data-no="Hvorfor oss" data-en="Why us">Hvorfor oss</a>
-        <a href="#process" data-no="Slik jobber vi" data-en="How we work">Slik jobber vi</a>
+        <a href="#why" data-no="Slik hjelper vi" data-en="How we help">Slik hjelper vi</a>
         <a href="#contact" data-no="Kontakt" data-en="Contact">Kontakt</a>
         <div class="lang">
           <button id="noBtn" class="active">NO</button>
@@ -318,54 +341,43 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
   </div>
 </section>
 
-<section class="why" id="why">
-  <div class="wrap why-grid">
-    <div class="why-copy reveal">
-      <div class="kicker" data-no="Hvorfor Ramstad Reklame" data-en="Why Ramstad Reklame">Hvorfor Ramstad Reklame</div>
-      <h2 data-no="En enkel prosess. Et sterkere uttrykk." data-en="A simple process. A stronger presence.">En enkel prosess. Et sterkere uttrykk.</h2>
-      <p data-no="Vi holder kommunikasjonen tydelig og tilpasser løsningene til det bedriften faktisk trenger." data-en="We keep communication clear and tailor the solution to what your business actually needs.">Vi holder kommunikasjonen tydelig og tilpasser løsningene til det bedriften faktisk trenger.</p>
-    </div>
-    <div class="why-cards">
-      <div class="why-card reveal"><div class="why-icon">✓</div><h3 data-no="Tydelig kommunikasjon" data-en="Clear communication">Tydelig kommunikasjon</h3><p data-no="Du vet hva som skjer og hva neste steg er." data-en="You know what is happening and what comes next.">Du vet hva som skjer og hva neste steg er.</p></div>
-      <div class="why-card reveal"><div class="why-icon">✦</div><h3 data-no="Profesjonelt uttrykk" data-en="Professional look">Profesjonelt uttrykk</h3><p data-no="Et moderne visuelt uttrykk som passer bedriften." data-en="A modern visual style tailored to the business.">Et moderne visuelt uttrykk som passer bedriften.</p></div>
-      <div class="why-card reveal"><div class="why-icon">↗</div><h3 data-no="Fleksible løsninger" data-en="Flexible solutions">Fleksible løsninger</h3><p data-no="Omfang og innhold tilpasses behovet." data-en="Scope and content are adapted to your needs.">Omfang og innhold tilpasses behovet.</p></div>
-      <div class="why-card reveal"><div class="why-icon">◎</div><h3 data-no="Digitalt samarbeid" data-en="Digital collaboration">Digitalt samarbeid</h3><p data-no="Vi kan samarbeide med bedrifter uansett hvor de er." data-en="We can collaborate with businesses wherever they are.">Vi kan samarbeide med bedrifter uansett hvor de er.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="process" id="process">
+<section class="why merged-journey" id="why">
+  <div id="process" class="anchor-alias" aria-hidden="true"></div>
   <div class="wrap">
     <div class="section-head reveal">
-      <div><div class="kicker" data-no="Slik jobber vi" data-en="How we work">Slik jobber vi</div><h2 data-no="Fra idé til ferdig løsning." data-en="From idea to finished solution.">Fra idé til ferdig løsning.</h2></div>
-      <p data-no="Tydelige steg gjør samarbeidet enkelt." data-en="Clear steps make collaboration simple.">Tydelige steg gjør samarbeidet enkelt.</p>
+      <div>
+        <div class="kicker" data-no="Derfor Ramstad Reklame" data-en="Why Ramstad Reklame">Derfor Ramstad Reklame</div>
+        <h2 data-no="Fra utfordring til en tydelig plan." data-en="From challenge to a clear plan.">Fra utfordring til en tydelig plan.</h2>
+      </div>
+      <p data-no="Du forteller oss hva du ønsker å oppnå. Vi foreslår riktig løsning, gjennomfører arbeidet og gjør det enkelt å følge med." data-en="Tell us what you want to achieve. We propose the right solution, deliver the work, and make it easy to follow progress.">Du forteller oss hva du ønsker å oppnå. Vi foreslår riktig løsning, gjennomfører arbeidet og gjør det enkelt å følge med.</p>
     </div>
-    <div class="steps">
-      <div class="step reveal"><h3 data-no="Vi lytter" data-en="We listen">Vi lytter</h3><p data-no="Du forteller hva bedriften trenger og hvem du vil nå." data-en="You tell us what your business needs and who you want to reach.">Du forteller hva bedriften trenger og hvem du vil nå.</p></div>
-      <div class="step reveal"><h3 data-no="Vi planlegger" data-en="We plan">Vi planlegger</h3><p data-no="Vi finner riktig retning for design og innhold." data-en="We define the right direction for design and content.">Vi finner riktig retning for design og innhold.</p></div>
-      <div class="step reveal"><h3 data-no="Vi produserer" data-en="We create">Vi produserer</h3><p data-no="Vi utvikler innholdet og bygger løsningen." data-en="We create the content and build the solution.">Vi utvikler innholdet og bygger løsningen.</p></div>
-      <div class="step reveal"><h3 data-no="Vi leverer" data-en="We deliver">Vi leverer</h3><p data-no="Du får et ferdig resultat klart til bruk." data-en="You receive a finished result ready to use.">Du får et ferdig resultat klart til bruk.</p></div>
+    <div class="steps merged-steps">
+      <div class="step reveal">
+        <h3 data-no="Vi forstår behovet" data-en="We understand your needs">Vi forstår behovet</h3>
+        <p data-no="Vi avklarer målgruppen, utfordringen og hva du vil oppnå." data-en="We clarify your audience, challenges, and goals.">Vi avklarer målgruppen, utfordringen og hva du vil oppnå.</p>
+      </div>
+      <div class="step reveal">
+        <h3 data-no="Vi lager løsningen" data-en="We create the solution">Vi lager løsningen</h3>
+        <p data-no="Vi velger tiltak og utvikler annonser, nettsider eller innhold etter behov." data-en="We choose the right actions and create ads, websites, or content as needed.">Vi velger tiltak og utvikler annonser, nettsider eller innhold etter behov.</p>
+      </div>
+      <div class="step reveal">
+        <h3 data-no="Vi leverer og følger opp" data-en="We deliver and follow up">Vi leverer og følger opp</h3>
+        <p data-no="Du får tydelige avtaler, god kommunikasjon og oversikt over leveransen." data-en="You get clear agreements, good communication, and visibility into delivery.">Du får tydelige avtaler, god kommunikasjon og oversikt over leveransen.</p>
+      </div>
     </div>
+    <p class="journey-note" data-no="For utvalgte annonsekampanjer kan vi avtale konkrete mål for visninger og rekkevidde, med tydelige målemetoder og vilkår." data-en="For selected advertising campaigns, we can agree on specific views and reach targets, with clear measurement methods and terms.">For utvalgte annonsekampanjer kan vi avtale konkrete mål for visninger og rekkevidde, med tydelige målemetoder og vilkår.</p>
   </div>
 </section>
 
 <section id="rr-offers" class="rr-root" data-category="hjem" aria-labelledby="rr-title"><noscript><div class="rr-wrap"><a href="mailto:post@ramstadreklame.no">Send din forespørsel – post@ramstadreklame.no</a></div></noscript></section>
-<section id="contact">
+<section id="contact" class="compact-contact">
   <div class="wrap">
     <div class="contact-panel reveal">
       <div class="contact-copy">
-        <div class="kicker" style="color:#c9ebff" data-no="La oss skape noe sammen" data-en="Let’s create something together">La oss skape noe sammen</div>
-        <h2 data-no="Klar for å gjøre bedriften mer synlig?" data-en="Ready to make your business more visible?">Klar for å gjøre bedriften mer synlig?</h2>
-        <p data-no="Send oss en melding, så finner vi en løsning som passer behovet ditt." data-en="Send us a message and we’ll find a solution that fits your needs.">Send oss en melding, så finner vi en løsning som passer behovet ditt.</p>
-        <form class="contact-form" id="contactForm">
-          <input id="name" name="name" maxlength="120" autocomplete="name" required type="text" data-ph-no="Navn" data-ph-en="Name" placeholder="Navn">
-          <input id="company" name="company" maxlength="120" autocomplete="organization" type="text" data-ph-no="Bedrift" data-ph-en="Company" placeholder="Bedrift">
-          <input id="email" name="email" maxlength="200" autocomplete="email" required type="email" data-ph-no="E-post" data-ph-en="Email" placeholder="E-post">
-          <textarea id="message" name="message" maxlength="5000" required data-ph-no="Hva kan vi hjelpe deg med?" data-ph-en="How can we help?" placeholder="Hva kan vi hjelpe deg med?"></textarea>
-          <button class="btn secondary" type="submit"><span data-no="Send forespørsel" data-en="Send inquiry">Send forespørsel</span><span class="arrow">→</span></button>
-          <p id="contactStatus" role="status" aria-live="polite" style="line-height:1.5;margin:4px 0 0"></p>
-          <p style="font-size:12px;margin:0"><a href="personvern.html" style="color:inherit;text-decoration:underline" data-no="Les om behandling av opplysningene dine" data-en="How we handle your information">Les om behandling av opplysningene dine</a></p>
-        </form>
+        <div class="kicker" style="color:#c9ebff" data-no="Kontakt oss" data-en="Contact us">Kontakt oss</div>
+        <h2 data-no="Har du et spørsmål?" data-en="Have a question?">Har du et spørsmål?</h2>
+        <p data-no="Du kan kontakte oss direkte, eller velge tjenesten du trenger i skjemaet over og få et uforpliktende prisoverslag." data-en="Contact us directly, or select the service you need using the form above for a no-obligation estimate.">Du kan kontakte oss direkte, eller velge tjenesten du trenger i skjemaet over og få et uforpliktende prisoverslag.</p>
+        <div class="cta"><a class="btn secondary" href="#rr-offers"><span data-no="Velg tjeneste og få tilbud" data-en="Choose a service and get a quote">Velg tjeneste og få tilbud</span><span class="arrow">→</span></a></div>
       </div>
       <div class="contact-side contact-list">
         <a class="contact-item" href="tel:+4790557317"><small data-no="Telefon" data-en="Phone">Telefon</small><strong>+47 905 57 317</strong></a>
@@ -375,7 +387,6 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
     </div>
   </div>
 </section>
-
 </main>
 <nav class="mobile-actions" aria-label="Hurtigvalg">
   <a href="#services" data-no="Se tjenester" data-en="View services">Se tjenester</a>
@@ -403,45 +414,6 @@ const observer=new IntersectionObserver(entries=>{
   });
 },{threshold:.12,rootMargin:'0px 0px -35px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-document.getElementById('contactForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  const form=e.currentTarget;
-  if(!form.reportValidity())return;
-  const lang=document.documentElement.lang||'no';
-  const name=document.getElementById('name').value.trim();
-  const company=document.getElementById('company').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const message=document.getElementById('message').value.trim();
-  const status=document.getElementById('contactStatus');
-  if(!name||!email||!message){
-    status.textContent=lang==='en'?'Please fill in the required fields.':'Fyll ut alle obligatoriske felt.';
-    return;
-  }
-  const button=form.querySelector('button[type="submit"]');
-  button.disabled=true;
-  form.setAttribute('aria-busy','true');
-  status.style.color='#eaf7ff';
-  status.textContent=lang==='en'?'Sending your message…':'Sender meldingen…';
-  try{
-    await window.RamstadWeb3Forms.send({
-      name,email,
-      company:company||(lang==='en'?'Not provided':'Ikke oppgitt'),
-      message,
-      subject:('Ramstad Reklame | '+name.slice(0,50)+' | '+email.slice(0,90)).slice(0,180)
-    });
-    status.style.color='#b7f5d3';
-    status.textContent=lang==='en'?'Message sent!':'Meldingen er sendt!';
-    window.location.assign('takk.html?type=contact');
-  }catch(err){
-    console.error('Contact delivery failed',err);
-    status.style.color='#ffd3d3';
-    status.textContent=lang==='en'?'Your message could not be sent. Please try again or email post@ramstadreklame.no.':'Meldingen kunne ikke sendes. Prøv igjen eller skriv til post@ramstadreklame.no.';
-  }finally{
-    button.disabled=false;
-    form.removeAttribute('aria-busy');
-  }
-});
 
 // Keep the public URL clean: no /index.html and no #section in the address bar.
 (function(){
