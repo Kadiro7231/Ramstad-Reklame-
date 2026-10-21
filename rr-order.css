@@ -83,3 +83,28 @@
   .rr-summary-total{margin-top:14px}
   .rr-action{margin-top:15px}
 }
+
+/* Visibly clickable additional services and a mobile-only price close to the selection. */
+.rr-extras{margin-top:22px;padding-top:0;border-top:0}
+.rr-extras>summary{display:flex;align-items:center;gap:12px;min-height:76px;margin-bottom:0;padding:14px 16px;list-style:none;border:2px solid #177df3;border-radius:15px;background:linear-gradient(110deg,#e9f5ff,#f7fbff);box-shadow:0 6px 16px rgba(10,112,225,.11);color:#083c75;cursor:pointer;transition:background .18s,border-color .18s,box-shadow .18s}
+.rr-extras>summary::-webkit-details-marker{display:none}
+.rr-extras>summary:hover{background:#dbeeff;border-color:#0065d7;box-shadow:0 8px 20px rgba(10,112,225,.16)}
+.rr-extras>summary:focus-visible{outline:3px solid #51ccff;outline-offset:3px}
+.rr-extras-plus{display:grid;place-items:center;width:38px;height:38px;min-width:38px;border-radius:10px;background:#087cff;color:white;font-size:25px;line-height:1}
+.rr-extras-label{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+.rr-extras-label strong{font-size:16px;line-height:1.3;color:#073d73}
+.rr-extras-label small{font-size:12px;color:#335d83;line-height:1.45}
+.rr-extras-chevron{font-size:27px;font-weight:800;line-height:1;color:#087cff;transition:transform .18s}
+.rr-extras-count{background:#0578db;color:#fff;border-radius:30px;padding:5px 8px;font-size:11px;font-weight:850;white-space:nowrap}
+.rr-extras-count[hidden]{display:none}
+.rr-extras[open]>summary{margin-bottom:17px;background:#e5f3ff}
+.rr-extras[open] .rr-extras-chevron{transform:rotate(180deg)}
+.rr-extras .rr-extra:has(input:checked){border-color:#1384ec;background:#e6f4ff;box-shadow:inset 0 0 0 1px #1384ec}
+.rr-mobile-price{display:none}
+@media(max-width:850px){
+  .rr-mobile-price{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 15px;border:1px solid #a9d5fb;border-radius:12px;background:#edf7ff;color:#174467;font-size:13px;font-weight:750}
+  .rr-mobile-price strong{color:#0757ab;font-size:18px;white-space:nowrap}
+  .rr-summary h3,.rr-summary #rr-summary-lines,.rr-summary .rr-summary-total{display:none}
+  .rr-summary{padding-top:18px}
+}
+@media(max-width:550px){.rr-extras>summary{gap:10px;padding:12px;min-height:72px}.rr-extras-label strong{font-size:15px}.rr-extras-plus{width:35px;min-width:35px;height:35px}.rr-mobile-price{flex-wrap:wrap}.rr-mobile-price strong{font-size:17px}}
