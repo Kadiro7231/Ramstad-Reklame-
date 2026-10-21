@@ -83,3 +83,23 @@
   .rr-summary-total{margin-top:14px}
   .rr-action{margin-top:15px}
 }
+
+
+/* Visible, compact pricing on every service page and homepage */
+.rr-price-section{padding:40px 0 32px;background:#eef6ff;color:#102947;font-family:Inter,system-ui,Arial,sans-serif;scroll-margin-top:90px}
+.rr-price-section *{box-sizing:border-box}
+.rr-price-wrap{width:min(1180px,calc(100% - 36px));margin:auto}
+.rr-price-wrap h2{font-size:clamp(26px,3vw,36px);color:#05234c;line-height:1.2;margin:0 0 10px}
+.rr-price-wrap>p{max-width:830px;margin:0 0 20px;color:#42617e;font-size:14px;line-height:1.6}
+.rr-price-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rr-price-card{display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-height:100px;padding:16px 18px;border:1px solid #cbdff1;border-radius:14px;background:#fff;color:#163753;text-decoration:none!important;transition:border-color .2s,transform .2s}
+.rr-price-card:hover,.rr-price-card:focus-visible{border-color:#0b78e3;transform:translateY(-2px)}
+.rr-price-card span{font-size:14px;font-weight:700;line-height:1.4}
+.rr-price-card strong{font-size:20px;color:#006cc7;line-height:1.2}
+.rr-price-group{margin:8px 0;background:#fff;border:1px solid #cbdff1;border-radius:14px;overflow:hidden}
+.rr-price-group summary{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;font-size:16px;font-weight:800;color:#08335c}
+.rr-price-group summary span{font-size:12px;color:#0c70c9;white-space:nowrap}
+.rr-price-group .rr-price-cards{padding:0 12px 12px}
+.rr-root{scroll-margin-top:88px}
+@media(max-width:850px){.rr-price-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.rr-price-section{padding:28px 0 22px}.rr-price-cards{grid-template-columns:1fr}.rr-price-card{min-height:0;padding:13px 14px;gap:4px}.rr-price-card strong{font-size:18px}.rr-price-wrap>p{font-size:13px}}
