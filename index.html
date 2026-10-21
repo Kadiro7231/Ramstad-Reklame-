@@ -205,6 +205,7 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
   .f1{left:0;top:38px}.f2{right:0;top:102px}.f3{left:8px;bottom:5px}.float-card{font-size:10px;padding:10px 11px}
   .f1{left:0;top:38px}.f2{right:0;top:102px}.f3{left:8px;bottom:5px}.float-card{font-size:10px;padding:10px 11px}
   .services,.work-grid,.why-cards,.steps{grid-template-columns:1fr}
+  .services{grid-template-columns:repeat(2,minmax(0,1fr))}
   section{padding:58px 0}.section-head{align-items:flex-start;flex-direction:column}
   .contact-panel{padding:28px}
 }
@@ -253,7 +254,7 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
     <div>
       <div class="eyebrow"><i></i><span data-no="Kreative løsninger for bedrifter" data-en="Creative solutions for businesses">Kreative løsninger for bedrifter</span></div>
       <h1 data-no-html='BLI SETT. <span class="accent">BLI HUSKET.</span>' data-en-html='BE SEEN. <span class="accent">BE REMEMBERED.</span>'>BLI SETT. <span class="accent">BLI HUSKET.</span></h1>
-      <p class="hero-copy" data-no="Mer synlighet. Flere muligheter. Målbare resultater. Nettsider, design, annonsering og strategisk markedsføring tilpasset din bedrift." data-en="Websites, design, advertising and visual content – all in one place. We build clear, modern experiences that help your business get noticed.">Nettsider, design, annonsering og visuelt innhold – samlet på ett sted. Vi bygger tydelige, moderne uttrykk som gjør bedriften din lettere å legge merke til.</p>
+      <p class="hero-copy" data-no="Mer synlighet. Flere muligheter. Målbare resultater. Nettsider, design, annonsering og strategisk markedsføring tilpasset din bedrift." data-en="More visibility. More opportunities. Measurable results. Websites, design, advertising and strategic marketing tailored to your business.">Mer synlighet. Flere muligheter. Målbare resultater. Nettsider, design, annonsering og strategisk markedsføring tilpasset din bedrift.</p>
       <div class="cta">
         <a class="btn primary" href="#rr-offers"><span data-no="Be om tilbud" data-en="Get a quote">Be om tilbud</span><span class="arrow">→</span></a>
         <a class="btn secondary" href="#services"><span data-no="Se våre tjenester" data-en="View services">Se våre tjenester</span><span class="arrow">→</span></a>
@@ -437,8 +438,15 @@ document.getElementById('contactForm').addEventListener('submit',async e=>{
 // Keep the public URL clean: no /index.html and no #section in the address bar.
 (function(){
   const cleanPath = location.pathname.replace(/\/index\.html$/i, '/') || '/';
+  const initialHash = location.hash;
   if (location.pathname !== cleanPath || location.hash) {
     history.replaceState(null, '', cleanPath + location.search);
+  }
+  // Direct links from service pages still jump to the preselected enquiry.
+  if (initialHash === '#rr-offers') {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.getElementById('rr-offers')?.scrollIntoView({block:'start'});
+    }));
   }
 
   document.querySelectorAll('a[href^="#"]').forEach(link => {
