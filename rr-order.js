@@ -71,56 +71,16 @@ function capture(){
  if(catKey==='hjem'){let c=q('rr-category');if(c)chosenCategory=c.value}
 }
 
-function renderVisiblePrices(){
- const sections=catKey==='hjem'?catOrder:[chosenCategory];
- let section=document.getElementById('rr-visible-prices');
- if(!section){
-   section=document.createElement('section');
-   section.id='rr-visible-prices';
-   section.className='rr-price-section';
-   root.insertAdjacentElement('beforebegin',section);
-   section.addEventListener('click',event=>{
-     const pick=event.target.closest('[data-price-pick]');
-     if(!pick)return;
-     event.preventDefault();
-     chosenCategory=pick.getAttribute('data-price-group');
-     saved.product=pick.getAttribute('data-price-pick');
-     create();
-     root.scrollIntoView({behavior:'smooth',block:'start'});
-   });
- }
- function card(key,p){
-   const tag=p.quote?L('Etter avtale','By quotation'):(p.from?L('Fra ','From '):'')+money(p.price)+(p.monthly?L(' / mnd',' / mo'):'');
-   return '<a class="rr-price-card" href="#rr-offers" data-price-group="'+key+'" data-price-pick="'+escaped(p.id)+'"><span>'+escaped(p[lang()])+'</span><strong>'+escaped(tag)+'</strong></a>';
- }
- const parts=sections.map(key=>{
-   const info=catalog[key];
-   const cards=info.items.map(p=>card(key,p)).join('');
-   if(catKey==='hjem'){
-     return '<details class="rr-price-group"><summary>'+escaped(info[lang()])+' <span>'+L('Se priser','See prices')+' ↓</span></summary><div class="rr-price-cards">'+cards+'</div></details>';
-   }
-   return '<div class="rr-price-cards">'+cards+'</div>';
- }).join('');
- section.innerHTML='<div class="rr-price-wrap"><h2>'+L('Priser på våre tjenester','Our service prices')+'</h2><p>'+L('Velg en tjeneste for å se prisen og gå direkte til forespørselen. Alle priser er veiledende i NOK. Annonsebudsjett, trykk og eksterne kostnader kommer i tillegg ved behov. MVA legges til når det er aktuelt.','Choose a service to see its price and go straight to the enquiry. Indicative prices in NOK. Ad spend, printing and external costs are additional where needed. VAT applies when required.')+'</p>'+parts+'</div>';
- if(catKey!=='hjem'){
-   const hero=document.querySelector('.hero-actions, .hero .actions, .hero .cta');
-   if(hero&&!hero.querySelector('a[href="#rr-visible-prices"]')){
-     const style=hero.classList.contains('cta')?'btn secondary':hero.classList.contains('actions')?'btn alt':'btn btn-outline';
-     hero.insertAdjacentHTML('beforeend','<a class="'+style+' rr-prices-hero" href="#rr-visible-prices">'+L('Se priser','See prices')+' ↘</a>');
-   }
- }
-}
-
 function create(){
  const selected=catalog[chosenCategory];
  const categories=catKey==='hjem'?'<label class="rr-field rr-wide"><span>'+L('Velg tjenesteområde','Choose service category')+'</span><select id="rr-category" name="category">'+catOrder.map(k=>option(k,catalog[k][lang()],k===chosenCategory)).join('')+'</select></label>':'';
  const products=selected.items.map(p=>option(p.id,p[lang()]+(p.price?' · '+money(p.price)+(p.monthly?L(' / mnd',' / mo'):''):'')+(p.quote?'':p.from?L(' (fra-pris)',' (starting price)'):''),saved.product===p.id)).join('');
  const extraHtml=extras.filter(e=>!(chosenCategory==='synlighet'&&e.id==='google')).map(e=>'<label class="rr-extra"><input name="rr-extra" type="checkbox" value="'+e.id+'"'+(saved.extras.includes(e.id)?' checked':'')+'><span><strong>'+escaped(e[lang()])+'</strong><small>+ '+money(e.price)+'</small></span></label>').join('');
  root.innerHTML='<div class="rr-wrap"><span class="rr-badge">'+L('VELG · TILPASS · SEND','CHOOSE · CUSTOMIZE · ENQUIRE')+'</span>'+
- '<h2 class="rr-title" id="rr-title">'+L('Velg tjeneste og se pris','Choose a service and see a price')+'</h2>'+
+ '<h2 class="rr-title" id="rr-title">'+L('Velg tjeneste og se pris','Choose a service and see the price')+'</h2>'+
  '<p class="rr-intro">'+L('Velg en tjeneste og se veiledende pris. Send en uforpliktende forespørsel – ingen betaling på denne siden. Endelig pris avtales skriftlig.','Choose a service and see an indicative price. Send a no-obligation enquiry – no payment is made on this page. We agree the final price in writing.')+'</p>'+
  '<div class="rr-payment-flow" aria-label="'+L('Slik fungerer bestilling og betaling','How enquiries and payments work')+'"><div><b>1</b><span>'+L('Send forespørsel','Send enquiry')+'</span></div><div><b>2</b><span>'+L('Avtal pris og omfang','Agree price and scope')+'</span></div><div><b>3</b><span>'+L('Motta Stripe-lenke','Receive Stripe link')+'</span></div><div><b>4</b><span>'+L('Betal sikkert','Pay securely')+'</span></div></div>'+ 
- '<div class="rr-grid"><form id="rr-form" class="rr-panel"><h3>'+L('Din bestilling – uten betalingsplikt','Your enquiry – no payment obligation')+'</h3><div class="rr-fields">'+categories+
+ '<div class="rr-grid"><form id="rr-form" class="rr-panel"><h3>'+L('Din forespørsel – ingen betaling','Your enquiry – no payment')+'</h3><div class="rr-fields">'+categories+
  '<label class="rr-field rr-wide"><span>'+L('Tjeneste / pakke','Service / package')+'</span><select id="rr-product" name="service" required><option value="">'+L('Velg tjeneste','Choose a service')+'</option>'+products+'</select></label>'+
  '<label class="rr-field"><span>'+L('Navn','Name')+'</span><input id="rr-name" name="name" maxlength="120" autocomplete="name" required value="'+escaped(saved.name)+'" placeholder="'+L('Ditt navn','Your name')+'"></label>'+
  '<label class="rr-field"><span>'+L('Bedrift (valgfritt)','Company (optional)')+'</span><input id="rr-company" name="company" maxlength="120" autocomplete="organization" value="'+escaped(saved.company)+'" placeholder="'+L('Bedriftsnavn','Company name')+'"></label>'+
@@ -190,7 +150,6 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
   }
 });
 summary();
-renderVisiblePrices();
 }
 function lines(){
  const prod=findProduct();let data=[];let cost=0;
