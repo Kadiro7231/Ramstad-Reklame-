@@ -6,7 +6,7 @@ const catalog={
     {id:'onepage',no:'Én-sides nettside',en:'One-page website',price:5900},
     {id:'businesssite',no:'Bedriftsnettside (inntil 6 sider)',en:'Business website (up to 6 pages)',price:12900},
     {id:'customsite',no:'Avansert nettside – fra',en:'Custom website – from',price:19900,from:true},
-    {id:'webproject',no:'Annet nettsideprosjekt – pris etter avtale',en:'Other website project – by quotation',quote:true},
+    {id:'webproject',no:'Annet nettsideprosjekt – fra',en:'Other website project – from',price:9900,from:true},
     {id:'webcare',no:'Vedlikehold av nettside – per måned',en:'Website maintenance – monthly',price:690,monthly:true}
   ]},
   design:{no:'Grafisk design',en:'Graphic design',items:[
@@ -18,7 +18,7 @@ const catalog={
     {id:'flyer2',no:'A5-flyer, to sider (design)',en:'A5 flyer, two sides (design)',price:1790},
     {id:'brochure',no:'Brosjyre 2–4 sider (design)',en:'2–4 page brochure (design)',price:2990},
     {id:'poster',no:'Plakat/banner (design)',en:'Poster/banner (design)',price:1290},
-    {id:'designquote',no:'Annet design / trykk – pris etter avtale',en:'Other design / printing – by quotation',quote:true}
+    {id:'designquote',no:'Annet design / trykk – fra',en:'Other design / printing – from',price:990,from:true}
   ]},
   annonsering:{no:'Annonsering',en:'Advertising',items:[
     {id:'campaign',no:'Oppsett av én annonsekampanje',en:'Setup of one ad campaign',price:2490},
@@ -26,19 +26,19 @@ const catalog={
     {id:'startmonthly',no:'Synlighet Start – per måned',en:'Visibility Start – monthly',price:3990,monthly:true},
     {id:'plusmonthly',no:'Synlighet Plus – per måned',en:'Visibility Plus – monthly',price:7990,monthly:true},
     {id:'promonthly',no:'Synlighet Pro – per måned',en:'Visibility Pro – monthly',price:12990,monthly:true},
-    {id:'adsquote',no:'Spesialkampanje – pris etter avtale',en:'Custom campaign – by quotation',quote:true}
+    {id:'adsquote',no:'Spesialkampanje – fra',en:'Custom campaign – from',price:3990,from:true}
   ]},
   synlighet:{no:'Google og AI-søk',en:'Google and AI search',items:[
-    {id:'googleai',no:'Synlighet på Google og i AI-søk – pris etter avtale',en:'Visibility on Google and in AI search – by quotation',quote:true},
+    {id:'googleai',no:'Synlighet på Google og i AI-søk – fra',en:'Visibility on Google and in AI search – from',price:4990,from:true},
     {id:'googleprofile',no:'Google bedriftsprofil – oppsett og optimalisering',en:'Google Business Profile setup and optimization',price:2490},
-    {id:'local-seo',no:'Lokal SEO og søkevennlig innhold – pris etter avtale',en:'Local SEO and search-friendly content – by quotation',quote:true}
+    {id:'local-seo',no:'Lokal SEO og søkevennlig innhold – fra',en:'Local SEO and search-friendly content – from',price:3990,from:true}
   ]},
   innhold:{no:'Bilder og innhold',en:'Photos and content',items:[
     {id:'photo5',no:'Produktfotografering – 5 produkter',en:'Product photography – 5 products',price:3900},
     {id:'photo10',no:'Produktfotografering – 10 produkter',en:'Product photography – 10 products',price:6900},
     {id:'edit',no:'Redigering av kort video fra kundemateriale',en:'Edit a short customer-supplied video',price:1490},
     {id:'reel',no:'Opptak og produksjon av kort Reel',en:'Film and produce a short Reel',price:3900},
-    {id:'filmquote',no:'Reklamefilm – pris etter avtale',en:'Commercial film – by quotation',quote:true}
+    {id:'filmquote',no:'Reklamefilm – fra',en:'Commercial film – from',price:6900,from:true}
   ]},
   pakker:{no:'Startpakker',en:'Starter packages',items:[
     {id:'startpakke',no:'Startpakke',en:'Starter package',price:3990},
@@ -70,6 +70,44 @@ function capture(){
  saved.extras=[...root.querySelectorAll('[name="rr-extra"]:checked')].map(i=>i.value);
  if(catKey==='hjem'){let c=q('rr-category');if(c)chosenCategory=c.value}
 }
+
+function renderVisiblePrices(){
+ const sections=catKey==='hjem'?catOrder:[chosenCategory];
+ let section=document.getElementById('rr-visible-prices');
+ if(!section){
+   section=document.createElement('section');
+   section.id='rr-visible-prices';
+   section.className='rr-price-section';
+   root.insertAdjacentElement('beforebegin',section);
+   section.addEventListener('click',event=>{
+     const pick=event.target.closest('[data-price-pick]');
+     if(!pick)return;
+     event.preventDefault();
+     chosenCategory=pick.getAttribute('data-price-group');
+     saved.product=pick.getAttribute('data-price-pick');
+     create();
+     root.scrollIntoView({behavior:'smooth',block:'start'});
+   });
+ }
+ function card(key,p){
+   const tag=p.quote?L('Etter avtale','By quotation'):(p.from?L('Fra ','From '):'')+money(p.price)+(p.monthly?L(' / mnd',' / mo'):'');
+   return '<a class="rr-price-card" href="#rr-offers" data-price-group="'+key+'" data-price-pick="'+escaped(p.id)+'"><span>'+escaped(p[lang()])+'</span><strong>'+escaped(tag)+'</strong></a>';
+ }
+ const parts=sections.map(key=>{
+   const info=catalog[key];
+   const cards=info.items.map(p=>card(key,p)).join('');
+   if(catKey==='hjem'){
+     return '<details class="rr-price-group"><summary>'+escaped(info[lang()])+' <span>'+L('Se priser','See prices')+' ↓</span></summary><div class="rr-price-cards">'+cards+'</div></details>';
+   }
+   return '<div class="rr-price-cards">'+cards+'</div>';
+ }).join('');
+ section.innerHTML='<div class="rr-price-wrap"><h2>'+L('Priser på våre tjenester','Our service prices')+'</h2><p>'+L('Velg en tjeneste for å se prisen og gå direkte til forespørselen. Alle priser er veiledende i NOK. Annonsebudsjett, trykk og eksterne kostnader kommer i tillegg ved behov. MVA legges til når det er aktuelt.','Choose a service to see its price and go straight to the enquiry. Indicative prices in NOK. Ad spend, printing and external costs are additional where needed. VAT applies when required.')+'</p>'+parts+'</div>';
+ if(catKey!=='hjem'){
+   const hero=document.querySelector('.hero-actions');
+   if(hero&&!hero.querySelector('a[href="#rr-visible-prices"]'))hero.insertAdjacentHTML('beforeend','<a class="btn btn-outline rr-prices-hero" href="#rr-visible-prices">'+L('Se priser','See prices')+' ↘</a>');
+ }
+}
+
 function create(){
  const selected=catalog[chosenCategory];
  const categories=catKey==='hjem'?'<label class="rr-field rr-wide"><span>'+L('Velg tjenesteområde','Choose service category')+'</span><select id="rr-category" name="category">'+catOrder.map(k=>option(k,catalog[k][lang()],k===chosenCategory)).join('')+'</select></label>':'';
@@ -99,6 +137,7 @@ form.addEventListener('input',()=>{capture();summary()});
 form.addEventListener('change',e=>{
  if(e.target.id==='rr-category'){capture();chosenCategory=e.target.value;saved.product='';create();return}
  capture();summary();
+ renderVisiblePrices();
 });
 form.addEventListener('submit',e=>{e.preventDefault();capture();if(!form.reportValidity())return;if(!findProduct())return;
  const d=root.querySelector('#rr-dialog');root.querySelector('#rr-review-text').textContent=makeBody();d.showModal();
