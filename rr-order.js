@@ -39,6 +39,12 @@ const catalog={
     {id:'startpakke',no:'Startpakke',en:'Starter package',price:3990},
     {id:'webpakke',no:'Nettsidepakke',en:'Website package',price:8490},
     {id:'vekst',no:'Vekstpakke',en:'Growth package',price:12990}
+  ]},
+  vekst:{no:'Strategi og markedsføring',en:'Strategy and marketing',items:[
+    {id:'strategi',no:'Markedsstrategi og rådgivning – tilbud etter vurdering',en:'Marketing strategy and consulting – individual quote',quote:true},
+    {id:'seo',no:'SEO og synlighet i AI-søk – forespørsel',en:'SEO and AI-search visibility – enquiry',quote:true},
+    {id:'epost',no:'E-post- og SMS-markedsføring – forespørsel',en:'Email and SMS marketing – enquiry',quote:true},
+    {id:'resultater',no:'Resultatmåling og kampanjeoptimalisering – forespørsel',en:'Performance tracking and campaign optimisation – enquiry',quote:true}
   ]}
 };
 const extras=[
@@ -49,9 +55,14 @@ const extras=[
 const root=document.getElementById('rr-offers');
 if(!root)return;
 const catKey=root.dataset.category||'hjem';
-const catOrder=['nettsider','design','annonsering','innhold','pakker'];
+const catOrder=['nettsider','design','annonsering','innhold','pakker','vekst'];
 let chosenCategory=catKey==='hjem'?'nettsider':catKey;
 let saved={product:'',extras:[],name:'',company:'',email:'',message:''};
+if(catKey==='hjem'){
+ const params=new URLSearchParams(window.location.search);
+ if(catOrder.includes(params.get('category')))chosenCategory=params.get('category');
+ if(catalog[chosenCategory].items.some(p=>p.id===params.get('service')))saved.product=params.get('service');
+}
 const lang=()=>document.documentElement.lang==='en'?'en':'no';
 const L=(no,en)=>lang()==='en'?en:no;
 const money=n=>new Intl.NumberFormat(lang()==='en'?'en-NO':'nb-NO',{maximumFractionDigits:0}).format(n)+' kr';
@@ -80,7 +91,10 @@ function create(){
  '<label class="rr-field"><span>'+L('Bedrift (valgfritt)','Company (optional)')+'</span><input id="rr-company" name="company" maxlength="120" autocomplete="organization" value="'+escaped(saved.company)+'" placeholder="'+L('Bedriftsnavn','Company name')+'"></label>'+
  '<label class="rr-field rr-wide"><span>'+L('E-postadresse','Email address')+'</span><input id="rr-email" name="email" type="email" required maxlength="200" autocomplete="email" value="'+escaped(saved.email)+'" placeholder="navn@bedrift.no"></label>'+
  '<label class="rr-field rr-wide"><span>'+L('Fortell om prosjektet (valgfritt)','Tell us about the project (optional)')+'</span><textarea id="rr-message" name="message" maxlength="5000" placeholder="'+L('Hva ønsker du å få laget?','What would you like us to create?')+'">'+escaped(saved.message)+'</textarea></label></div>'+
- '<div class="rr-extras"><h3>'+L('Valgfrie tillegg','Optional extras')+'</h3><p>'+L('Velg bare det du har behov for. Tillegg kan fjernes før innsending.','Select only what you need. Extras can be removed before you submit.')+'</p>'+extraHtml+'</div>'+
+ '<details class="rr-extras"><summary>'+L('Valgfrie tillegg (valgfritt)','Optional extras (optional)')+'</summary><p>'+L('Velg bare det du har behov for. Tillegg kan fjernes før innsending.','Select only what you need. Extras can be removed before you submit.')+'</p>'+extraHtml+'</details>'+
+  '<div class="rr-mobile-check"><span>'+L('Veiledende pris','Indicative price')+'</span><strong id="rr-mobile-total">–</strong></div>'+
+  '<p class="rr-mobile-terms">'+L('Endelig pris bekreftes skriftlig. MVA tilkommer kun hvis relevant. Annonsebudsjett, trykk og hosting er ikke inkludert med mindre annet er avtalt.','Final price is confirmed in writing. VAT applies only where relevant. Ad spend, printing and hosting are excluded unless agreed otherwise.')+'</p>'+
+  '<button class="rr-action rr-mobile-submit" type="submit">'+L('Gjennomgå og send forespørsel','Review and send enquiry')+' ↗</button>'+
  '<p class="rr-privacy-note">'+L('Vi bruker opplysningene for å følge opp din forespørsel. Les vår ','We use your details to follow up on your enquiry. Read our ')+'<a href="personvern.html">'+L('personvernerklæring','privacy policy')+'</a>.</p><div id="rr-form-status" class="rr-status" role="status" aria-live="polite"></div></form>'+
  '<aside class="rr-summary" aria-live="polite"><h3>'+L('Oppsummering','Summary')+'</h3><div id="rr-summary-lines"></div><div class="rr-summary-total"><span>'+L('Veiledende sum','Indicative total')+'</span><strong id="rr-total">–</strong></div>'+
  '<small id="rr-summary-terms"></small><div class="rr-chip">'+L('Ingen betaling før skriftlig avtale','No payment before written agreement')+'</div>'+
@@ -154,7 +168,9 @@ function lines(){
 function summary(){
  const s=lines();const el=root.querySelector('#rr-summary-lines');
  el.innerHTML=s.data.length?s.data.map(x=>'<div class="rr-summary-line"><span>'+escaped(x.label)+'</span><strong>'+(x.quote?L('Etter avtale','By quotation'):(x.from?L('Fra ','From '):'')+money(x.price))+'</strong></div>').join(''):'<p style="color:#b9d6ec">'+L('Velg en tjeneste for å se prisen.','Choose a service to view the price.')+'</p>';
- root.querySelector('#rr-total').textContent=s.prod?(s.prod.quote?L('Avklares i tilbud','To be quoted'):(s.variable?L('Fra ','From '):'')+money(s.cost)):'–';
+ const indicative=s.prod?(s.prod.quote?L('Avklares i tilbud','To be quoted'):(s.variable?L('Fra ','From '):'')+money(s.cost)):'–';
+  root.querySelector('#rr-total').textContent=indicative;
+  root.querySelector('#rr-mobile-total').textContent=indicative;
  root.querySelector('#rr-summary-terms').textContent=L('Veiledende priser i NOK. MVA tilkommer bare når virksomheten er MVA-registrert og avgiften er pålagt. Trykk, annonsebudsjett, domene og hosting er ikke inkludert med mindre annet er avtalt. Endelig omfang og sum bekreftes skriftlig.','Indicative NOK prices. VAT applies only when the business is VAT registered and the tax is due. Printing, ad spend, domain and hosting are excluded unless agreed otherwise. Final scope and total are confirmed in writing.')+(s.variable?L(' Valgt tjeneste krever særskilt avtale.',' Selected service requires a separate agreement.'):'');
 }
 function makeBody(){

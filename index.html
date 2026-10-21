@@ -98,7 +98,7 @@ section{padding:78px 0}
 .section-head p{max-width:560px;margin:0;color:var(--muted)}
 
 /* Services */
-.services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
 .service{border:1px solid var(--line);border-radius:22px;padding:10px;background:#fff;overflow:hidden;box-shadow:0 14px 34px rgba(20,47,81,.06);transition:.32s}
 .service:hover{transform:translateY(-9px);border-color:#bed9f8;box-shadow:0 25px 55px rgba(20,47,81,.12)}
 .service-media{height:158px;border-radius:16px;overflow:hidden;position:relative}
@@ -165,6 +165,9 @@ section{padding:78px 0}
 footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#64748b}
 .footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
+/* Mobile quick access to enquiry */
+.mobile-actions{display:none}
+#services,#rr-offers,#contact{scroll-margin-top:20px}
 /* Reveal */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .72s ease,transform .72s cubic-bezier(.2,.7,.2,1)}
 .reveal.visible{opacity:1;transform:none}
@@ -186,9 +189,23 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
   .wrap{width:min(100% - 24px,1180px)}
   nav{height:72px}.brand-sub{display:none}.brand-name{font-size:14px}.logo-shell{width:44px;height:44px}
   .hero{padding:58px 0 48px}h1{font-size:44px}.hero-copy{font-size:16px}
-  .stage{min-height:345px}.device-card{inset:15px 3px 0 3px}
+  .stage,.motion-strip{display:none}
+  .hero{padding-bottom:35px}
+  .services{grid-template-columns:1fr 1fr;gap:10px}
+  .service{border-radius:15px;padding:7px}
+  .service-media{height:85px;border-radius:10px}
+  .service-body{padding:11px 5px 7px}
+  .service h3{font-size:14px}
+  .service p{font-size:12px;line-height:1.4}
+  .service .go{height:27px;width:27px}
+  .mobile-actions{position:fixed;bottom:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr 1.4fr;gap:9px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:#061a38;box-shadow:0 -8px 30px #00132f45}
+  .mobile-actions a{display:flex;justify-content:center;align-items:center;min-height:45px;border-radius:11px;padding:10px 8px;font-size:13px;font-weight:850;color:#fff;text-align:center;background:#15426c}
+  .mobile-actions a:last-child{background:#087cff}
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+  .f1{left:0;top:38px}.f2{right:0;top:102px}.f3{left:8px;bottom:5px}.float-card{font-size:10px;padding:10px 11px}
   .f1{left:0;top:38px}.f2{right:0;top:102px}.f3{left:8px;bottom:5px}.float-card{font-size:10px;padding:10px 11px}
   .services,.work-grid,.why-cards,.steps{grid-template-columns:1fr}
+  .services{grid-template-columns:repeat(2,minmax(0,1fr))}
   section{padding:58px 0}.section-head{align-items:flex-start;flex-direction:column}
   .contact-panel{padding:28px}
 }
@@ -225,6 +242,10 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
     </nav>
   </div>
 </header>
+<nav class="mobile-actions" aria-label="Hurtignavigasjon">
+  <a href="#services" data-no="Tjenester" data-en="Services">Tjenester</a>
+  <a href="#rr-offers" data-no="Be om tilbud" data-en="Get a quote">Be om tilbud</a>
+</nav>
 
 <main id="top">
 <section class="hero">
@@ -232,10 +253,10 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow"><i></i><span data-no="Kreative løsninger for bedrifter" data-en="Creative solutions for businesses">Kreative løsninger for bedrifter</span></div>
-      <h1 data-no-html='Vi gjør bedriften din <span class="accent">mer synlig.</span>' data-en-html='We make your business <span class="accent">more visible.</span>'>Vi gjør bedriften din <span class="accent">mer synlig.</span></h1>
-      <p class="hero-copy" data-no="Nettsider, design, annonsering og visuelt innhold – samlet på ett sted. Vi bygger tydelige, moderne uttrykk som gjør bedriften din lettere å legge merke til." data-en="Websites, design, advertising and visual content – all in one place. We build clear, modern experiences that help your business get noticed.">Nettsider, design, annonsering og visuelt innhold – samlet på ett sted. Vi bygger tydelige, moderne uttrykk som gjør bedriften din lettere å legge merke til.</p>
+      <h1 data-no-html='BLI SETT. <span class="accent">BLI HUSKET.</span>' data-en-html='BE SEEN. <span class="accent">BE REMEMBERED.</span>'>BLI SETT. <span class="accent">BLI HUSKET.</span></h1>
+      <p class="hero-copy" data-no="Mer synlighet. Flere muligheter. Målbare resultater. Nettsider, design, annonsering og strategisk markedsføring tilpasset din bedrift." data-en="More visibility. More opportunities. Measurable results. Websites, design, advertising and strategic marketing tailored to your business.">Mer synlighet. Flere muligheter. Målbare resultater. Nettsider, design, annonsering og strategisk markedsføring tilpasset din bedrift.</p>
       <div class="cta">
-        <a class="btn primary" href="#contact"><span data-no="Kontakt oss" data-en="Contact us">Kontakt oss</span><span class="arrow">→</span></a>
+        <a class="btn primary" href="#rr-offers"><span data-no="Be om tilbud" data-en="Get a quote">Be om tilbud</span><span class="arrow">→</span></a>
         <a class="btn secondary" href="#services"><span data-no="Se våre tjenester" data-en="View services">Se våre tjenester</span><span class="arrow">→</span></a>
       </div>
       <div class="trust">
@@ -264,16 +285,19 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
   <div class="wrap">
     <div class="section-head reveal">
       <div><div class="kicker" data-no="Våre tjenester" data-en="Our services">Våre tjenester</div><h2 data-no="Alt bedriften trenger for et sterkere digitalt uttrykk." data-en="Everything your business needs for a stronger digital presence.">Alt bedriften trenger for et sterkere digitalt uttrykk.</h2></div>
-      <p data-no="Fire områder, én helhetlig stil. Trykk på en tjeneste for å lese mer." data-en="Four areas, one consistent style. Select a service to learn more.">Fire områder, én helhetlig stil. Trykk på en tjeneste for å lese mer.</p>
+      <p data-no="Fem områder, én helhetlig tilnærming. Velg en tjeneste for å lese mer." data-en="Five areas, one coherent approach. Choose a service to learn more.">Fire områder, én helhetlig stil. Trykk på en tjeneste for å lese mer.</p>
     </div>
     <div class="services">
       <a class="service reveal" href="nettsider.html"><div class="service-media"><img src="websites-workspace.png" alt="Nettsider"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Nettsider" data-en="Websites">Nettsider</h3><p data-no="Raske, moderne og mobilvennlige nettsider." data-en="Fast, modern and mobile-friendly websites.">Raske, moderne og mobilvennlige nettsider.</p></div><span class="go">→</span></div></div></a>
       <a class="service reveal" href="grafisk-design.html"><div class="service-media"><img src="design-branding.png" alt="Grafisk design"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Grafisk design" data-en="Graphic design">Grafisk design</h3><p data-no="Visuell profil, materiell og tydelig merkevareuttrykk." data-en="Visual identity, materials and a clear brand look.">Visuell profil, materiell og tydelig merkevareuttrykk.</p></div><span class="go">→</span></div></div></a>
       <a class="service reveal" href="annonsering.html"><div class="service-media"><img src="advertising-strategy.png" alt="Annonsering"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Annonsering" data-en="Advertising">Annonsering</h3><p data-no="Kreativt innhold for digitale kampanjer." data-en="Creative content for digital campaigns.">Kreativt innhold for digitale kampanjer.</p></div><span class="go">→</span></div></div></a>
       <a class="service reveal" href="bilder-innhold.html"><div class="service-media"><img src="content-shoot.png" alt="Bilder og innhold"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Bilder & innhold" data-en="Images & content">Bilder & innhold</h3><p data-no="Visuelt innhold som støtter budskapet ditt." data-en="Visual content that supports your message.">Visuelt innhold som støtter budskapet ditt.</p></div><span class="go">→</span></div></div></a>
+      <a class="service reveal" href="strategi.html"><div class="service-media"><img src="advertising-strategy.png" alt="Markedsstrategi og rådgivning"></div><div class="service-body"><div class="service-top"><div><h3 data-no="Strategi & rådgivning" data-en="Strategy & consulting">Strategi & rådgivning</h3><p data-no="Målgrupper, kampanjeplan og målbare mål – tilbud etter vurdering." data-en="Audience, campaign planning and measurable goals – quoted individually.">Målgrupper, kampanjeplan og målbare mål – tilbud etter vurdering.</p></div><span class="go">→</span></div></div></a>
     </div>
   </div>
 </section>
+
+<section id="rr-offers" class="rr-root" data-category="hjem" aria-labelledby="rr-title"><noscript><div class="rr-wrap"><a href="mailto:post@ramstadreklame.no">Send din forespørsel – post@ramstadreklame.no</a></div></noscript></section>
 
 <section class="showcase" id="examples">
   <div class="wrap">
@@ -347,7 +371,7 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
     </div>
   </div>
 </section>
-<section id="rr-offers" class="rr-root" data-category="hjem" aria-labelledby="rr-title"><noscript><div class="rr-wrap"><a href="mailto:post@ramstadreklame.no">Send din forespørsel – post@ramstadreklame.no</a></div></noscript></section>
+
 </main>
 
 <footer><div class="wrap footer-row"><span>© 2026 Ramstad Reklame</span><span data-no="Nettsider · Design · Annonsering · Visuelt innhold" data-en="Websites · Design · Advertising · Visual content">Nettsider · Design · Annonsering · Visuelt innhold</span></div><span class="rr-privacy-footer"><a href="personvern.html" data-no="Personvern" data-en="Privacy">Personvern</a></span></footer>
@@ -414,8 +438,15 @@ document.getElementById('contactForm').addEventListener('submit',async e=>{
 // Keep the public URL clean: no /index.html and no #section in the address bar.
 (function(){
   const cleanPath = location.pathname.replace(/\/index\.html$/i, '/') || '/';
+  const initialHash = location.hash;
   if (location.pathname !== cleanPath || location.hash) {
     history.replaceState(null, '', cleanPath + location.search);
+  }
+  // Direct links from service pages still jump to the preselected enquiry.
+  if (initialHash === '#rr-offers') {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.getElementById('rr-offers')?.scrollIntoView({block:'start'});
+    }));
   }
 
   document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -434,7 +465,7 @@ document.getElementById('contactForm').addEventListener('submit',async e=>{
 </script>
 <script src="rr-forms-config.js?v=20261016" defer></script>
 <script src="rr-web3forms.js?v=20261016" defer></script>
-<script src="rr-order.js?v=20261016-web3forms-1" defer></script>
+<script src="rr-order.js?v=20261021-mobile-growth-1" defer></script>
 <script src="rr-analytics.js" defer></script>
 </body>
 </html>
