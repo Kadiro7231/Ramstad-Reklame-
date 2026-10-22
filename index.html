@@ -332,6 +332,12 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
 .search-feature-spotlight{padding:24px 0 0}
 .search-feature-spotlight .search-highlight{margin-top:0}
 @media(max-width:600px){.hero-search-entry{margin-top:12px;font-size:12px;padding:9px 11px}.search-feature-spotlight{padding-top:16px}}
+
+/* Future bloggers service: a compact, non-clickable teaser. */
+.bloggers-preview{display:inline-flex;align-items:center;flex-wrap:wrap;gap:12px;max-width:100%;margin-top:17px;padding:12px 16px;border:1px solid #195ea0;border-radius:14px;background:linear-gradient(120deg,#061b39,#0b356b);color:#fff;box-shadow:0 9px 20px rgba(8,53,111,.12)}
+.bloggers-preview-name{font-size:15px;font-weight:900;letter-spacing:.01em}
+.bloggers-preview-soon{display:inline-flex;align-items:center;min-height:29px;padding:5px 11px;background:#dff3ff;color:#054f9e;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap}
+@media(max-width:600px){.bloggers-preview{padding:11px 14px;margin-top:13px;gap:9px}.bloggers-preview-name{font-size:14px}}
 </style>
 <link rel="stylesheet" href="rr-order.css?v=20261022-focus-extras">
 <link rel="icon" href="ramstad-logo-official.png" type="image/png">
@@ -458,6 +464,11 @@ footer{padding:26px 0;border-top:1px solid var(--line);font-size:12px;color:#647
     </div>
 
     <p class="services-after"><span data-no="Vil du finne noe spesifikt? Søk blant alle tjenestene våre, eller få prisoverslag nedenfor." data-en="Looking for something specific? Search all our services or get an indicative price below.">Vil du finne noe spesifikt? Søk blant alle tjenestene våre, eller få prisoverslag nedenfor.</span> <a class="service-index-link" href="tjenester.html" data-no="Søk alle tjenester →" data-en="Search all services →">Søk alle tjenester →</a></p>
+    <!-- Preview only: no link, signup, pricing or public bloggers subpage until launch. -->
+    <div class="bloggers-preview" role="note" aria-label="Bloggers — Coming soon">
+      <span class="bloggers-preview-name">Bloggers</span>
+      <span class="bloggers-preview-soon">Coming soon</span>
+    </div>
   </div>
 </section>
 
