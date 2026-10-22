@@ -40,6 +40,12 @@ footer{background:#061933;color:#cfe5ff;padding:28px 0;font-size:13px}footer .wr
 :focus-visible{outline:3px solid #67c8ff;outline-offset:3px}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.hero{padding:40px 0 58px}.hero h1{font-size:35px}.find{padding:13px}.service{padding:19px}}
 @media(max-width:430px){.brand{font-size:12px}.brand img{width:35px;height:35px}.top{min-height:64px}.nav{gap:6px}.home{padding:8px;font-size:11px}.service ul{grid-template-columns:1fr}.service h2{font-size:18px}.buttons a{flex:1;padding:10px 6px}}
+
+/* Bloggers teaser is an informational non-clickable preview only. */
+.bloggers-preview{display:inline-flex;align-items:center;flex-wrap:wrap;gap:12px;max-width:calc(100% - 30px);margin:15px auto 0;padding:11px 15px;border:1px solid #195ea0;border-radius:14px;background:linear-gradient(120deg,#061b39,#0b356b);color:white}
+.bloggers-preview-name{font-size:15px;font-weight:900}
+.bloggers-preview-soon{display:inline-flex;align-items:center;justify-content:center;min-height:29px;padding:5px 11px;background:#dff3ff;color:#054f9e;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap}
+@media(max-width:600px){.bloggers-preview{margin-top:12px;padding:9px 12px;gap:9px}.bloggers-preview-name{font-size:14px}}
 </style><link rel="stylesheet" href="rr-footer.css?v=20261022-footer-v1">
 </head>
 <body><header><div class="wrap top"><a class="brand" href="/"><img src="ramstad-logo-official.png" alt="Ramstad Reklame">RAMSTAD <em>REKLAME</em></a>
@@ -47,6 +53,7 @@ footer{background:#061933;color:#cfe5ff;padding:28px 0;font-size:13px}footer .wr
 <main><section class="hero"><div class="wrap"><span class="eyebrow">BLI SETT. BLI HUSKET.</span>
 <h1 data-no="Finn tjenesten du trenger." data-en="Find the service you need.">Finn tjenesten du trenger.</h1>
 <p data-no="Alle våre tjenester samlet på ett sted. Søk, velg og be om tilbud – uten å lete gjennom lange sider." data-en="All our services in one place. Search, choose and request a quote without browsing long pages.">Alle våre tjenester samlet på ett sted. Søk, velg og be om tilbud – uten å lete gjennom lange sider.</p></div></section>
+<div class="wrap"><div class="bloggers-preview" role="note" aria-label="Bloggers — Coming soon"><span class="bloggers-preview-name">Bloggers</span><span class="bloggers-preview-soon" data-no="Kommer snart" data-en="Coming soon">Kommer snart</span></div></div>
 <div class="wrap search-area"><div class="find"><label for="search" data-no="Hva trenger du hjelp med?" data-en="What do you need help with?">Hva trenger du hjelp med?</label><input type="search" id="search" autocomplete="off" placeholder="Søk f.eks. logo, reklame, nettside, Google…" aria-controls="results" aria-describedby="count"></div>
 <div class="chips" role="group" aria-label="Filtrer tjenester"><button type="button" data-type="all" aria-pressed="true" data-no="Alle" data-en="All">Alle</button><button type="button" data-type="ads" aria-pressed="false" data-no="Annonser" data-en="Advertising">Annonser</button><button type="button" data-type="web" aria-pressed="false" data-no="Nettsider" data-en="Websites">Nettsider</button><button type="button" data-type="design" aria-pressed="false" data-no="Design" data-en="Design">Design</button><button type="button" data-type="content" aria-pressed="false" data-no="Foto og video" data-en="Photo and video">Foto og video</button><button type="button" data-type="search" aria-pressed="false" data-no="Google og AI" data-en="Google and AI">Google og AI</button></div>
 <p class="count" id="count" aria-live="polite"></p>
