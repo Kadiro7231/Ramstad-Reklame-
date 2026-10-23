@@ -92,7 +92,7 @@ function create(){
  '<aside class="rr-summary" aria-live="polite"><h3>'+L('Oppsummering','Summary')+'</h3><div id="rr-summary-lines"></div><div class="rr-summary-total"><span>'+L('Veiledende sum','Indicative total')+'</span><strong id="rr-total">–</strong></div>'+
  '<small id="rr-summary-terms"></small><div class="rr-chip">'+L('Ingen betaling før skriftlig avtale','No payment before written agreement')+'</div>'+
  '<button class="rr-action" type="submit" form="rr-form">'+L('Gjennomgå forespørsel','Review enquiry')+' ↗</button>'+
- '<div class="rr-hint">'+L('Forespørselen sendes direkte fra nettstedet. Vi kontakter deg dersom vi trenger flere detaljer, og avtaler pris før eventuell betaling.','Your enquiry is submitted from this website. We will contact you if we need more details and agree the price before any payment.')+'</div><a class="rr-payment-info" href="betaling.html">'+L('Les om sikker betaling etter avtale ↗','Learn about secure payment after agreement ↗')+'</a></aside></div></div>'+
+ '<div class="rr-hint">'+L('Forespørselen sendes direkte fra nettstedet. Vi kontakter deg dersom vi trenger flere detaljer, og avtaler pris før eventuell betaling.','Your enquiry is submitted from this website. We will contact you if we need more details and agree the price before any payment.')+'</div><a class="rr-payment-info" style="display:inline-block;margin:12px 0;color:#f1f7ff;text-decoration:underline" href="mailto:adrian.ramstad1@gmail.com?subject=Ramstad%20Reklame%20-%20Foresporsel">'+L('Alternativ: Kontakt oss direkte på e-post ↗','Alternative: Email us directly ↗')+'</a><a class="rr-payment-info" href="betaling.html">'+L('Les om sikker betaling etter avtale ↗','Learn about secure payment after agreement ↗')+'</a></aside></div></div>'+
  '<dialog class="rr-dialog" id="rr-dialog" aria-labelledby="rr-review-title"><div class="rr-dialog-inner"><h3 id="rr-review-title">'+L('Kontroller forespørselen','Review your enquiry')+'</h3><p>'+L('Er opplysningene riktige? Du kan gå tilbake og endre før du sender forespørselen.','Are the details correct? You can go back and make changes before submitting your enquiry.')+'</p><div class="rr-review" id="rr-review-text"></div>'+
  '<p>'+L('Ved innsending sendes opplysningene via Web3Forms til oss. Dette er ikke betaling eller bindende kjøp.','When submitted, the information is forwarded to us via Web3Forms. This is not a payment or binding purchase.')+'</p>'+
  '<div class="rr-status" id="rr-dialog-status" role="status" aria-live="polite"></div><div class="rr-dialog-actions"><button type="button" class="rr-secondary" id="rr-edit">'+L('Gå tilbake','Go back')+'</button><button type="button" class="rr-action" id="rr-send">'+L('Send din forespørsel','Send your request')+'</button></div></div></dialog>';
@@ -146,7 +146,7 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
   }catch(err){
     console.error('Order delivery failed',err);
     status.className='rr-status rr-error';
-    status.textContent=L('Forespørselen kunne ikke sendes. Prøv igjen eller kontakt adrian.ramstad1@gmail.com.','Your enquiry could not be sent. Please try again or email adrian.ramstad1@gmail.com.');
+    status.innerHTML=L('Forespørselen kunne ikke sendes. <a href="mailto:adrian.ramstad1@gmail.com">Send oss en e-post direkte</a>.','Your enquiry could not be sent. <a href="mailto:adrian.ramstad1@gmail.com">Email us directly</a>.');
     button.disabled=false;edit.disabled=false;
   }
 });
