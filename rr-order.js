@@ -146,7 +146,7 @@ root.querySelector('#rr-send').addEventListener('click',async()=>{
   }catch(err){
     console.error('Order delivery failed',err);
     status.className='rr-status rr-error';
-    status.textContent=L('Forespørselen kunne ikke sendes. Prøv igjen eller kontakt post@ramstadreklame.no.','Your enquiry could not be sent. Please try again or email post@ramstadreklame.no.');
+    status.textContent=L('Forespørselen kunne ikke sendes. Prøv igjen eller kontakt adrian.ramstad1@gmail.com.','Your enquiry could not be sent. Please try again or email adrian.ramstad1@gmail.com.');
     button.disabled=false;edit.disabled=false;
   }
 });
