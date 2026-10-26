@@ -108,3 +108,19 @@
   .rr-summary{padding-top:18px}
 }
 @media(max-width:550px){.rr-extras>summary{gap:10px;padding:12px;min-height:72px}.rr-extras-label strong{font-size:15px}.rr-extras-plus{width:35px;min-width:35px;height:35px}.rr-mobile-price{flex-wrap:wrap}.rr-mobile-price strong{font-size:17px}}
+
+
+/* Selected-service explanation: compact, readable and close to the price selector. */
+.rr-fields>.rr-wide{grid-column:1/-1}
+.rr-service-info{margin-top:-5px;border:1px solid #c6ddf4;border-radius:15px;background:#f6faff;padding:16px 18px;color:#163f65}
+.rr-service-info[hidden]{display:none}
+.rr-info-heading{font-size:15px;line-height:1.4;font-weight:850;color:#073d73;margin-bottom:7px}
+.rr-service-info p{font-size:13px;line-height:1.55;margin:0 0 8px;color:#365b7e}
+.rr-service-info ul{padding:0;margin:0 0 9px 0;list-style:none}
+.rr-service-info li{position:relative;margin:5px 0;padding-left:20px;line-height:1.45;font-size:13px}
+.rr-service-info li::before{content:"✓";position:absolute;left:0;top:0;font-weight:900;color:#07805b}
+.rr-info-note{font-size:12px;line-height:1.55;color:#526a83;border-top:1px solid #d7e5f5;padding-top:8px}
+.rr-no-payment{display:flex;align-items:flex-start;gap:9px;padding:11px 14px;border:1px solid #c5e5d6;border-radius:12px;background:#f3fbf7;color:#184a3a;font-size:12px;line-height:1.5}
+.rr-no-payment strong{white-space:nowrap;color:#146543;font-size:12px}
+.rr-no-payment span{flex:1}
+@media(max-width:600px){.rr-service-info{padding:13px 14px}.rr-no-payment{flex-direction:column;gap:3px;padding:11px 12px}.rr-info-heading{font-size:14px}.rr-service-info p,.rr-service-info li{font-size:12px}}
